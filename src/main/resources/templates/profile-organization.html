@@ -1,98 +1,81 @@
-<div class="container margin-top-bottom" xmlns:th="http://www.w3.org/1999/xhtml">
-    <div class="row">
-        <div class="col-12">
-            <img src="">
-            <h1>Organization profile</h1>
-        </div>
-    </div>
-    <div class="row margin-top-bottom">
-        <div class="col-12">
-            <div class="box box-shadow margin-top-bottom">
-                <div class="box-header">
-                    Organization information
-                </div>
-                <div class="box-body">
-                    <form th:object="${organizationUpdateRequest}" th:action="@{/organization/create}">
-                        <div class="container">
-                            <div class="row margin-top-bottom">
-                                <div class="col-4">
-                                    <label for="Name">Organization name</label>
-                                </div>
-                                <div class="col-8">
-                                    <input type="text" id="Name" name="Name" class="form-control" placeholder="Name" required="" autofocus="">
-                                </div>
-                            </div>
-                            <div class="row margin-top-bottom">
-                                <div class="col-4">
-                                    <label for="Name1">Organization name</label>
-                                </div>
-                                <div class="col-8">
-                                    <input type="text" id="Name1" name="Name" class="form-control" placeholder="Name" required="" autofocus="">
-                                </div>
-                            </div>
-                            <div class="row margin-top-bottom">
-                                <div class="col-4">
-                                    <label for="Name2">Organization name</label>
-                                </div>
-                                <div class="col-8">
-                                    <input type="text" id="Name2" name="Name" class="form-control" placeholder="Name" required="" autofocus="">
-                                </div>
-                            </div>
-                            <div class="row margin-top-bottom">
-                                <div class="col-4">
-                                    <label for="Name3">Organization name</label>
-                                </div>
-                                <div class="col-8">
-                                    <input type="text" id="Name3" name="Name" class="form-control" placeholder="Name" required="" autofocus="">
-                                </div>
-                            </div>
-                        </div>
-                    </form>
-                </div>
+<form action="/organization/update" method="post">
+    <div class="container margin-top-bottom" xmlns:th="http://www.thymeleaf.org">
+        <div class="row">
+            <div class="col-12">
+                <h1>
+                    <img class="image-icon"
+                          th:if="${organizationUpdateRequest.getImageId() != null}"
+                          th:src="${'image/' + organizationUpdateRequest.getImageId().toString()}">
+                    Organization profile
+                    <button id="submit"
+                            class="btn btn-lg btn-primary"
+                            type="submit">Save</button>
+                </h1>
             </div>
-            <div class="box box-shadow margin-top-bottom">
-                <div class="box-header">
-                    Organization address
-                </div>
-                <div class="box-body">
-                    <form>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+                <div class="box box-shadow margin-top-bottom">
+                    <div class="box-header">
+                        Organization information
+                    </div>
+                    <div class="box-body">
                         <div class="container">
                             <div class="row margin-top-bottom">
                                 <div class="col-4">
-                                    <label for="Name4">Organization name</label>
+                                    <label for="Name">Name</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" id="Name4" name="Name" class="form-control" placeholder="Name" required="" autofocus="">
+                                    <input type="text" id="Name" name="Name" class="form-control" placeholder="Name"
+                                           th:value="${organizationUpdateRequest.getName()}">
                                 </div>
                             </div>
                             <div class="row margin-top-bottom">
                                 <div class="col-4">
-                                    <label for="Name5">Organization name</label>
+                                    <label for="OrganizationCity">City</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" id="Name5" name="Name" class="form-control" placeholder="Name" required="" autofocus="">
+                                    <input type="text" id="OrganizationCity" name="OrganizationCity"
+                                           class="form-control" placeholder="Name"
+                                           th:value="${organizationUpdateRequest.getOrganizationCity()}">
                                 </div>
                             </div>
                             <div class="row margin-top-bottom">
                                 <div class="col-4">
-                                    <label for="Name6">Organization name</label>
+                                    <label for="OrganizationStreet">Street</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" id="Name6" name="Name" class="form-control" placeholder="Name" required="" autofocus="">
+                                    <input type="text" id="OrganizationStreet" name="OrganizationStreet"
+                                           class="form-control" placeholder="Name" required="required"
+                                           th:value="${organizationUpdateRequest.getOrganizationStreet()}">
                                 </div>
                             </div>
                             <div class="row margin-top-bottom">
                                 <div class="col-4">
-                                    <label for="Name7">Organization name</label>
+                                    <label for="OrganizationStreetNumber">Street number</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" id="Name7" name="Name" class="form-control" placeholder="Name" required="" autofocus="">
+                                    <input type="text" id="OrganizationStreetNumber" name="OrganizationStreetNumber"
+                                           class="form-control" placeholder="OrganizationStreetNumber"
+                                           required="required"
+                                           th:value="${organizationUpdateRequest.getOrganizationStreetNumber()}">
+                                </div>
+                            </div>
+                            <div class="row margin-top-bottom">
+                                <div class="col-4">
+                                    <label for="OrganizationCountry">Country</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text" id="OrganizationCountry" name="OrganizationCountry"
+                                           class="form-control" placeholder="OrganizationCountry"
+                                           required="required"
+                                           th:value="${organizationUpdateRequest.getOrganizationCountry()}">
                                 </div>
                             </div>
                         </div>
-                    </form>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</form>

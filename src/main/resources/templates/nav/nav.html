@@ -1,20 +1,25 @@
-<div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.w3.org/1999/xhtml">
+<div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <nav class="navbar navbar-dark bg-dark">
         <div class="container">
             <a class="navbar-brand" href="/organization/dashboard">Teamout</a>
-
             <ul class="navbar-nav m-auto">
                 <li class="nav-item m-auto" sec:authorize="isAuthenticated()">
-                    <a class="nav-link active" href="/organization/dashboard">Home</a>
+                    <a class="nav-link active" href="/organization/dashboard">Dashboard</a>
                 </li>
-                <li class="nav-item m-auto" sec:authorize="hasRole('ORGANIZATIONOWNER') || hasRole('ADMIN')">
-                    <a class="nav-link active" th:href="/organization/organizationdetails">Organization</a>
+                <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                    <a class="nav-link active" href="/organization/profile">Organization</a>
                 </li>
-                <li class="nav-item m-auto" sec:authorize="hasRole('ORGANIZATIONOWNER') || hasRole('ADMIN')">
+                <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                    <a class="nav-link active" href="/Employees">My profile</a>
+                </li>
+                <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
                     <a class="nav-link active" href="/Employees">Employees</a>
                 </li>
-                <li class="nav-item m-auto" sec:authorize="hasRole('ORGANIZATIONOWNER') || hasRole('ROLE_ADMIN')">
-                    <a class="nav-link active" href="/manufacturers">Manufacturers</a>
+                <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                    <a class="nav-link active" href="/manufacturers">Reports</a>
+                </li>
+                <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                    <a class="nav-link active" href="/manufacturers">Statistics</a>
                 </li>
             </ul>
         </div>

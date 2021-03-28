@@ -37,7 +37,7 @@ public class User implements UserDetails
     @OneToOne
     private Address Address;
 
-    @OneToOne
+    @OneToOne(fetch = FetchType.LAZY)
     private Image Picture;
 
     @OneToMany(mappedBy = "User", fetch = FetchType.EAGER)

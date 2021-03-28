@@ -5,6 +5,7 @@ import mk.ukim.finki.mihail.risteski.teamout.model.entity.Organization;
 import mk.ukim.finki.mihail.risteski.teamout.model.entity.User;
 import mk.ukim.finki.mihail.risteski.teamout.model.enumeration.RoleEnum;
 import mk.ukim.finki.mihail.risteski.teamout.model.request.CreateOrganizationRequest;
+import mk.ukim.finki.mihail.risteski.teamout.model.request.OrganizationUpdateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.service.OrganizationService;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -43,7 +44,21 @@ public class OrganizationController
             throw new NotFoundException("Couldn't find organization");
         }
 
-        model.addAttribute("Organization", optionalOrganization.get());
+        Organization organization = optionalOrganization.get();
+
+        OrganizationUpdateRequest organizationUpdateRequest = new OrganizationUpdateRequest();
+        organizationUpdateRequest.setName(organization.getName());
+        organizationUpdateRequest.setOrganizationCity(organization.getAddress().getCity());
+        organizationUpdateRequest.setOrganizationStreet(organization.getAddress().getStreet());
+        organizationUpdateRequest.setOrganizationStreetNumber(organization.getAddress().getNumber());
+        organizationUpdateRequest.setOrganizationCountry(organization.getAddress().getCountry());
+
+        if (organization.getLogo() != null)
+        {
+            organizationUpdateRequest.setImageId(organization.getLogo().getId());
+        }
+
+        model.addAttribute("organizationUpdateRequest", organizationUpdateRequest);
         model.addAttribute("bodyContent", "profile-organization");
         return "root";
     }
