@@ -1,0 +1,53 @@
+.box {
+    border-color: #fefefe;
+    border-width: 2px;
+    background-color: #fefefe;
+    border-style: groove;
+    border-radius: 5px;
+}
+
+.box.box-shadow
+{
+    box-shadow: 0 0 10px rgb(220, 220, 220);
+}
+
+.box.box-shadow-hover:hover
+{
+    box-shadow: 0 0 20px rgb(184, 184, 184);
+}
+
+.box .box-header
+{
+    border-bottom-color: #fefefe;
+    background-color: #ffffff;
+    border-bottom-width: 2px;
+    border-bottom-style: groove;
+    padding: 20px;
+}
+
+.box .box-body
+{
+}
+
+.flex-container {
+    display: flex;
+}
+
+.flex-container.flex-center{
+    justify-content: center;
+    align-items: center;
+}
+
+.margin-top-bottom {
+    margin-top: 20px;
+    margin-bottom: 20px;
+}
+
+.margin-left-right{
+    margin-left: 20px;
+    margin-right: 20px;
+}
+
+.height-5 {
+    height: 250px;
+}

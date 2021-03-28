@@ -1,0 +1,118 @@
+<form action="/organization/create"
+      class="form-signin mt-xl-5"
+      enctype="multipart/form-data"
+      method="post">
+    <div class="container" xmlns="http://www.w3.org/1999/xhtml" xmlns:th="http://www.thymeleaf.org">
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+                <h2>Register an organization</h2>
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+                <h3>Information about the organization itself</h3>
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+                <label for="Name" class="sr-only">Name</label>
+                <input type="text" id="Name" name="Name" class="form-control" placeholder="Name" required="">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+                <label for="OrganizationCity" class="sr-only">OrganizationCity</label>
+                <input type="text" id="OrganizationCity" name="OrganizationCity" class="form-control"
+                       placeholder="OrganizationCity" required="">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+                <label for="OrganizationStreet" class="sr-only">OrganizationStreet</label>
+                <input type="text" id="OrganizationStreet" name="OrganizationStreet" class="form-control"
+                       placeholder="OrganizationStreet" required="">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+                <label for="OrganizationStreetNumber" class="sr-only">OrganizationStreetNumber</label>
+                <input type="text" id="OrganizationStreetNumber" name="OrganizationStreetNumber" class="form-control"
+                       placeholder="OrganizationStreetNumber" required="">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+                <label for="OrganizationCountry" class="sr-only">OrganizationCountry</label>
+                <input type="text" id="OrganizationCountry" name="OrganizationCountry" class="form-control"
+                       placeholder="OrganizationCountry" required="">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+                <label for="logo" class="form-label">Upload an organization logo</label>
+                <input type="file" id="logo" name="logo" class="form-control" accept="image/png, image/jpeg">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+                <h3>Little bit about the organization owner</h3>
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+                <label for="FirstName" class="sr-only">FirstName</label>
+                <input type="text" id="FirstName" name="FirstName" class="form-control"
+                       placeholder="FirstName" required="">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+
+            </div>
+        </div>
+
+        <div class="margin-top-bottom">
+            <label for="LastName" class="sr-only">LastName</label>
+            <input type="text" id="LastName" name="LastName" class="form-control" placeholder="LastName" required="" autofocus="">
+        </div>
+        <div class="margin-top-bottom">
+            <label for="Email" class="sr-only">E-mail</label>
+            <input type="email" id="Email" name="Email" class="form-control" placeholder="E-Mail" required="" autofocus="">
+        </div>
+        <div class="margin-top-bottom">
+            <label for="Password" class="sr-only">Password</label>
+            <input type="password" id="Password" name="Password" class="form-control" placeholder="Password" equired="">
+        </div>
+        <div class="margin-top-bottom">
+            <label for="phoneNumber" class="sr-only">phoneNumber</label>
+            <input type="text" id="phoneNumber" name="phoneNumber" class="form-control" placeholder="phoneNumber" required="" autofocus="">
+        </div>
+        <div class="margin-top-bottom">
+            <label for="UserCity" class="sr-only">UserCity</label>
+            <input type="text" id="UserCity" name="UserCity" class="form-control" placeholder="UserCity" required="" autofocus="">
+        </div>
+        <div class="margin-top-bottom">
+            <label for="UserStreet" class="sr-only">UserStreet</label>
+            <input type="text" id="UserStreet" name="UserStreet" class="form-control" placeholder="UserStreet" required="" autofocus="">
+        </div>
+        <div class="margin-top-bottom">
+            <label for="UserStreetNumber" class="sr-only">UserStreetNumber</label>
+            <input type="text" id="UserStreetNumber" name="UserStreetNumber" class="form-control" placeholder="UserStreetNumber" required="" autofocus="">
+        </div>
+        <div class="margin-top-bottom">
+            <label for="UserCountry" class="sr-only">UserCountry</label>
+            <input type="text" id="UserCountry" name="UserCountry" class="form-control" placeholder="UserCountry" required="" autofocus="">
+        </div>
+        <div class="margin-top-bottom">
+            <label for="userImage" class="sr-only">userImage</label>
+            <input type="file" id="userImage" name="userImage" class="form-control" accept="image/png, image/jpeg">
+        </div>
+        <div th:text="${param.error}" class="text-danger"></div>
+        <button id="submit" class="btn btn-lg btn-primary btn-block margin-top-bottom" type="submit">Register organization</button>
+    </div>
+</form>
