@@ -6,6 +6,8 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import static mk.ukim.finki.mihail.risteski.teamout.web.controller.BaseController.HandleBaseAttributes;
+
 @Controller
 @RequestMapping(value = "/organization")
 public class DashboardController
@@ -21,6 +23,7 @@ public class DashboardController
     public String Dashboard(Model model)
     {
         model.addAttribute("bodyContent", "dashboard");
+        HandleBaseAttributes(model);
 
         return "root";
     }

@@ -7,7 +7,7 @@
                     <a class="nav-link active" href="/organization/dashboard">Dashboard</a>
                 </li>
                 <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
-                    <a class="nav-link active" href="/organization/profile">Organization</a>
+                    <a class="nav-link active" th:href="${'/organization/profile/' + currentUser.getUserOrganizationId().toString()}">Organization</a>
                 </li>
                 <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
                     <a class="nav-link active" href="/Employees">My profile</a>

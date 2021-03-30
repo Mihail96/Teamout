@@ -1,103 +1,67 @@
 package mk.ukim.finki.mihail.risteski.teamout.web.controller;
 
 import javassist.NotFoundException;
-import mk.ukim.finki.mihail.risteski.teamout.model.entity.Organization;
-import mk.ukim.finki.mihail.risteski.teamout.model.entity.User;
-import mk.ukim.finki.mihail.risteski.teamout.model.enumeration.RoleEnum;
+import mk.ukim.finki.mihail.risteski.teamout.model.dto.OrganizationDto;
 import mk.ukim.finki.mihail.risteski.teamout.model.request.CreateOrganizationRequest;
 import mk.ukim.finki.mihail.risteski.teamout.model.request.OrganizationUpdateRequest;
-import mk.ukim.finki.mihail.risteski.teamout.service.OrganizationService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
+import mk.ukim.finki.mihail.risteski.teamout.service.contract.IOrganizationService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import java.io.IOException;
-import java.util.Optional;
+import javax.websocket.server.PathParam;
+
+import static mk.ukim.finki.mihail.risteski.teamout.web.controller.BaseController.HandleBaseAttributes;
 
 @Controller
 @RequestMapping(value = "/organization")
 public class OrganizationController
 {
-    public final OrganizationService _organizationService;
+    public final IOrganizationService _organizationService;
 
-    public OrganizationController(OrganizationService organizationService)
+    public OrganizationController(IOrganizationService organizationService)
     {
         _organizationService = organizationService;
     }
 
     @GetMapping(value = "/profile")
-    public String GetCompanyProfile(Model model) throws NotFoundException
+    public String GetOrganizationProfile(Model model) throws NotFoundException
     {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = (User)authentication.getPrincipal();
+        OrganizationDto organizationDto = _organizationService.GetOrganizationProfile();
 
-        Optional<Organization> optionalOrganization =
-                currentUser.getUserInOrganizations().stream().filter(x -> x.getRole().getName().equals(RoleEnum.Owner.getName()))
-                                                             .map(x -> x.getOrganization()).findFirst();
-
-        if(optionalOrganization.isEmpty())
-        {
-            throw new NotFoundException("Couldn't find organization");
-        }
-
-        Organization organization = optionalOrganization.get();
-
-        OrganizationUpdateRequest organizationUpdateRequest = new OrganizationUpdateRequest();
-        organizationUpdateRequest.setName(organization.getName());
-        organizationUpdateRequest.setOrganizationCity(organization.getAddress().getCity());
-        organizationUpdateRequest.setOrganizationStreet(organization.getAddress().getStreet());
-        organizationUpdateRequest.setOrganizationStreetNumber(organization.getAddress().getNumber());
-        organizationUpdateRequest.setOrganizationCountry(organization.getAddress().getCountry());
-
-        if (organization.getLogo() != null)
-        {
-            organizationUpdateRequest.setImageId(organization.getLogo().getId());
-        }
-
-        model.addAttribute("organizationUpdateRequest", organizationUpdateRequest);
+        model.addAttribute("organizationDto", organizationDto);
         model.addAttribute("bodyContent", "profile-organization");
+        HandleBaseAttributes(model);
+
+        return "root";
+    }
+
+    @PostMapping(value = "/update/organizationId")
+    public String UpdateOrganization(OrganizationUpdateRequest organizationUpdateRequest,
+                                     @PathParam("organizationId") Long organizationId,
+                                     Model model) throws NotFoundException
+    {
+        OrganizationDto organizationDto = _organizationService.UpdateOrganization(organizationId, organizationUpdateRequest);
+
+        model.addAttribute("organizationDto", organizationDto);
+        model.addAttribute("bodyContent", "profile-organization");
+        HandleBaseAttributes(model);
+
         return "root";
     }
 
     @PostMapping(value = "/create")
-    public String CreateOrganization(@ModelAttribute(value = "organizationRequest") CreateOrganizationRequest organizationRequest,
+    public String CreateOrganization(CreateOrganizationRequest organizationRequest,
                                      @RequestParam("userImage") MultipartFile userImageFile,
                                      @RequestParam("logo") MultipartFile logoFile,
                                      Model model)
     {
-        if(userImageFile != null && userImageFile.getOriginalFilename() != null)
-        {
-            organizationRequest.PictureName = StringUtils.cleanPath(userImageFile.getOriginalFilename());
-            try
-            {
-                organizationRequest.PictureContent = userImageFile.getBytes();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
 
-        if(logoFile != null && logoFile.getOriginalFilename() != null)
-        {
-            organizationRequest.LogoName = StringUtils.cleanPath(logoFile.getOriginalFilename());
-            try
-            {
-                organizationRequest.LogoContent = logoFile.getBytes();
-            }
-            catch (IOException e)
-            {
-                e.printStackTrace();
-            }
-        }
-
-        _organizationService.CreateOrganization(organizationRequest);
+        _organizationService.CreateOrganization(organizationRequest, logoFile, userImageFile);
 
         model.addAttribute("bodyContent", "login");
+        HandleBaseAttributes(model);
 
         return "redirect:/login";
     }

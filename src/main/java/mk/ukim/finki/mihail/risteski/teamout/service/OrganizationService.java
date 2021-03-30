@@ -1,14 +1,21 @@
 package mk.ukim.finki.mihail.risteski.teamout.service;
 
 import javassist.NotFoundException;
+import mk.ukim.finki.mihail.risteski.teamout.model.dto.OrganizationDto;
 import mk.ukim.finki.mihail.risteski.teamout.model.entity.*;
 import mk.ukim.finki.mihail.risteski.teamout.model.enumeration.RoleEnum;
 import mk.ukim.finki.mihail.risteski.teamout.model.request.CreateOrganizationRequest;
+import mk.ukim.finki.mihail.risteski.teamout.model.request.OrganizationUpdateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.repository.*;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IOrganizationService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.Optional;
 
 @Service
@@ -51,8 +58,34 @@ public class OrganizationService implements IOrganizationService
     }
 
     @Override
-    public void CreateOrganization(CreateOrganizationRequest request)
+    public void CreateOrganization(CreateOrganizationRequest request, MultipartFile logoFile, MultipartFile userImageFile)
     {
+        if(logoFile != null && logoFile.getOriginalFilename() != null)
+        {
+            request.LogoName = StringUtils.cleanPath(logoFile.getOriginalFilename());
+            try
+            {
+                request.LogoContent = logoFile.getBytes();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        if(userImageFile != null && userImageFile.getOriginalFilename() != null)
+        {
+            request.PictureName = StringUtils.cleanPath(userImageFile.getOriginalFilename());
+            try
+            {
+                request.PictureContent = userImageFile.getBytes();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
         Organization organization = new Organization();
 
         organization.setName(request.Name);
@@ -109,5 +142,94 @@ public class OrganizationService implements IOrganizationService
         _userRepository.save(user);
         _organizationRepository.save(organization);
         _userInOrganizationRepository.saveAndFlush(owner);
+    }
+
+    @Override
+    public OrganizationDto GetOrganizationProfile() throws NotFoundException
+    {
+        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+        User currentUser = (User)authentication.getPrincipal();
+
+        Optional<Organization> optionalOrganization =
+                currentUser.getUserInOrganizations().stream().filter(x -> x.getRole().getName().equals(RoleEnum.Owner.getName()))
+                        .map(x -> x.getOrganization()).findFirst();
+
+        if(optionalOrganization.isEmpty())
+        {
+            throw new NotFoundException("Couldn't find organization");
+        }
+
+        Organization organization = optionalOrganization.get();
+
+        OrganizationDto organizationDto = new OrganizationDto();
+        organizationDto.setName(organization.getName());
+        organizationDto.setOrganizationCity(organization.getAddress().getCity());
+        organizationDto.setOrganizationStreet(organization.getAddress().getStreet());
+        organizationDto.setOrganizationStreetNumber(organization.getAddress().getNumber());
+        organizationDto.setOrganizationCountry(organization.getAddress().getCountry());
+
+        if (organization.getLogo() != null)
+        {
+            organizationDto.setImageId(organization.getLogo().getId());
+        }
+
+        return organizationDto;
+    }
+
+    @Override
+    public OrganizationDto UpdateOrganization(Long organizationId,
+                                              OrganizationUpdateRequest request,
+                                              MultipartFile logoFile) throws NotFoundException
+    {
+        if(logoFile != null && logoFile.getOriginalFilename() != null)
+        {
+            request.LogoName = StringUtils.cleanPath(logoFile.getOriginalFilename());
+            try
+            {
+                request.LogoContent = logoFile.getBytes();
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        Optional<Organization> optionalOrganization = _organizationRepository.findById(organizationId);
+        if(optionalOrganization.isEmpty())
+        {
+            throw new NotFoundException("Couldn't find organization");
+        }
+
+        Organization organization = optionalOrganization.get();
+
+        Address address = organization.getAddress();
+        Image image = organization.getLogo();
+
+        organization.setName(request.getName());
+
+        address.setCity(request.getOrganizationCity());
+        address.setStreet(request.getOrganizationStreet());
+        address.setNumber(request.getOrganizationStreetNumber());
+        address.setCountry(request.getOrganizationCountry());
+        _addressRepository.save(address);
+
+        if(!request.LogoName.equals("") && request.LogoContent.length != 0)
+        {
+            image.setName(request.getLogoName());
+            image.setContent(request.getLogoContent());
+            _imageRepository.save(image);
+        }
+
+        _organizationRepository.saveAndFlush(organization);
+
+        OrganizationDto organizationDto = new OrganizationDto();
+        organizationDto.setName(organization.getName());
+        organizationDto.setImageId(image.getId());
+        organizationDto.setOrganizationCity(address.getCity());
+        organizationDto.setOrganizationStreet(address.getStreet());
+        organizationDto.setOrganizationStreetNumber(address.getNumber());
+        organizationDto.setOrganizationCountry(address.getCountry());
+
+        return organizationDto;
     }
 }

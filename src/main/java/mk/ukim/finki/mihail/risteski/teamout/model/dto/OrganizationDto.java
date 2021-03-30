@@ -1,15 +1,13 @@
-package mk.ukim.finki.mihail.risteski.teamout.model.request;
+package mk.ukim.finki.mihail.risteski.teamout.model.dto;
 
-public class OrganizationUpdateRequest
+public class OrganizationDto
 {
     public String Name;
     public String OrganizationCity;
     public String OrganizationStreet;
     public String OrganizationStreetNumber;
     public String OrganizationCountry;
-    public String LogoName;
-    public byte[] LogoContent;
-
+    public Long ImageId;
 
     public String getName() {
         return Name;
@@ -51,23 +49,11 @@ public class OrganizationUpdateRequest
         OrganizationCountry = organizationCountry;
     }
 
-    public String getLogoName()
-    {
-        return LogoName;
+    public Long getImageId() {
+        return ImageId;
     }
 
-    public void setLogoName(String logoName)
-    {
-        LogoName = logoName;
-    }
-
-    public byte[] getLogoContent()
-    {
-        return LogoContent;
-    }
-
-    public void setLogoContent(byte[] logoContent)
-    {
-        LogoContent = logoContent;
+    public void setImageId(Long imageId) {
+        ImageId = imageId;
     }
 }

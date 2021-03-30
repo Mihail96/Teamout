@@ -4,8 +4,8 @@
             <div class="col-12">
                 <h1>
                     <img class="image-icon"
-                          th:if="${organizationUpdateRequest.getImageId() != null}"
-                          th:src="${'image/' + organizationUpdateRequest.getImageId().toString()}">
+                          th:if="${organizationDto.getImageId() != null}"
+                          th:src="${'image/' + organizationDto.getImageId().toString()}">
                     Organization profile
                     <button id="submit"
                             class="btn btn-lg btn-primary"
@@ -27,7 +27,7 @@
                                 </div>
                                 <div class="col-8">
                                     <input type="text" id="Name" name="Name" class="form-control" placeholder="Name"
-                                           th:value="${organizationUpdateRequest.getName()}">
+                                           th:value="${organizationDto.getName()}">
                                 </div>
                             </div>
                             <div class="row margin-top-bottom">
@@ -37,7 +37,7 @@
                                 <div class="col-8">
                                     <input type="text" id="OrganizationCity" name="OrganizationCity"
                                            class="form-control" placeholder="Name"
-                                           th:value="${organizationUpdateRequest.getOrganizationCity()}">
+                                           th:value="${organizationDto.getOrganizationCity()}">
                                 </div>
                             </div>
                             <div class="row margin-top-bottom">
@@ -47,7 +47,7 @@
                                 <div class="col-8">
                                     <input type="text" id="OrganizationStreet" name="OrganizationStreet"
                                            class="form-control" placeholder="Name" required="required"
-                                           th:value="${organizationUpdateRequest.getOrganizationStreet()}">
+                                           th:value="${organizationDto.getOrganizationStreet()}">
                                 </div>
                             </div>
                             <div class="row margin-top-bottom">
@@ -58,7 +58,7 @@
                                     <input type="text" id="OrganizationStreetNumber" name="OrganizationStreetNumber"
                                            class="form-control" placeholder="OrganizationStreetNumber"
                                            required="required"
-                                           th:value="${organizationUpdateRequest.getOrganizationStreetNumber()}">
+                                           th:value="${organizationDto.getOrganizationStreetNumber()}">
                                 </div>
                             </div>
                             <div class="row margin-top-bottom">
@@ -69,7 +69,7 @@
                                     <input type="text" id="OrganizationCountry" name="OrganizationCountry"
                                            class="form-control" placeholder="OrganizationCountry"
                                            required="required"
-                                           th:value="${organizationUpdateRequest.getOrganizationCountry()}">
+                                           th:value="${organizationDto.getOrganizationCountry()}">
                                 </div>
                             </div>
                         </div>
