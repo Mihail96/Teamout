@@ -1,11 +1,14 @@
-<form action="/organization/update" method="post">
-    <div class="container margin-top-bottom" xmlns:th="http://www.thymeleaf.org">
+<form xmlns:th="http://www.thymeleaf.org"
+      th:action="${'/organization/' + currentUser.getUserOrganizationId().toString() + '/update'}"
+      enctype="multipart/form-data"
+      method="post">
+    <div class="container margin-top-bottom">
         <div class="row">
             <div class="col-12">
                 <h1>
                     <img class="image-icon"
-                          th:if="${organizationDto.getImageId() != null}"
-                          th:src="${'image/' + organizationDto.getImageId().toString()}">
+                         th:if="${organizationDto.getImageId() != null}"
+                         th:src="${'/organization/' +  currentUser.getUserOrganizationId().toString() + '/image/' + organizationDto.getImageId().toString()}">
                     Organization profile
                     <button id="submit"
                             class="btn btn-lg btn-primary"
@@ -26,7 +29,11 @@
                                     <label for="Name">Name</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" id="Name" name="Name" class="form-control" placeholder="Name"
+                                    <input type="text"
+                                           id="Name"
+                                           name="Name"
+                                           class="form-control"
+                                           placeholder="Name"
                                            th:value="${organizationDto.getName()}">
                                 </div>
                             </div>
@@ -35,8 +42,11 @@
                                     <label for="OrganizationCity">City</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" id="OrganizationCity" name="OrganizationCity"
-                                           class="form-control" placeholder="Name"
+                                    <input type="text"
+                                           id="OrganizationCity"
+                                           name="OrganizationCity"
+                                           class="form-control"
+                                           placeholder="Name"
                                            th:value="${organizationDto.getOrganizationCity()}">
                                 </div>
                             </div>
@@ -45,8 +55,12 @@
                                     <label for="OrganizationStreet">Street</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" id="OrganizationStreet" name="OrganizationStreet"
-                                           class="form-control" placeholder="Name" required="required"
+                                    <input type="text"
+                                           id="OrganizationStreet"
+                                           name="OrganizationStreet"
+                                           class="form-control"
+                                           placeholder="Name"
+                                           required="required"
                                            th:value="${organizationDto.getOrganizationStreet()}">
                                 </div>
                             </div>
@@ -55,8 +69,11 @@
                                     <label for="OrganizationStreetNumber">Street number</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" id="OrganizationStreetNumber" name="OrganizationStreetNumber"
-                                           class="form-control" placeholder="OrganizationStreetNumber"
+                                    <input type="text"
+                                           id="OrganizationStreetNumber"
+                                           name="OrganizationStreetNumber"
+                                           class="form-control"
+                                           placeholder="OrganizationStreetNumber"
                                            required="required"
                                            th:value="${organizationDto.getOrganizationStreetNumber()}">
                                 </div>
@@ -66,10 +83,25 @@
                                     <label for="OrganizationCountry">Country</label>
                                 </div>
                                 <div class="col-8">
-                                    <input type="text" id="OrganizationCountry" name="OrganizationCountry"
-                                           class="form-control" placeholder="OrganizationCountry"
+                                    <input type="text"
+                                           id="OrganizationCountry"
+                                           name="OrganizationCountry"
+                                           class="form-control"
+                                           placeholder="OrganizationCountry"
                                            required="required"
                                            th:value="${organizationDto.getOrganizationCountry()}">
+                                </div>
+                            </div>
+                            <div class="row margin-top-bottom">
+                                <div class="col-4">
+                                    <label for="logo">Change logo</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="file"
+                                           id="logo"
+                                           name="logo"
+                                           class="form-control-file"
+                                           accept="image/png, image/jpeg">
                                 </div>
                             </div>
                         </div>

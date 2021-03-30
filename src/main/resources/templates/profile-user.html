@@ -1,0 +1,155 @@
+<form xmlns:th="http://www.thymeleaf.org"
+      th:action="${'/organization/' + currentUser.getUserOrganizationId().toString() + '/user/ ' + currentUser.getUserId() + '/update'}"
+      enctype="multipart/form-data"
+      method="post">
+    <div class="container margin-top-bottom">
+        <div class="row">
+            <div class="col-12">
+                <h1>
+                    <img class="image-icon"
+                         th:if="${userDto.getPictureId() != null}"
+                         th:src="${'/organization/' +  currentUser.getUserOrganizationId().toString() + '/image/' + userDto.getPictureId().toString()}">
+                    User profile
+                    <button id="submit"
+                            class="btn btn-lg btn-primary"
+                            type="submit">Save</button>
+                </h1>
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+                <div class="box box-shadow margin-top-bottom">
+                    <div class="box-header">
+                        User <span th:text="${userDto.getFirstName() + ' ' + userDto.getLastName()}"></span>
+                    </div>
+                    <div class="box-body">
+                        <div class="container">
+                            <div class="row margin-top-bottom">
+                                <div class="col-4">
+                                    <label for="FirstName">First name</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text"
+                                           id="FirstName"
+                                           name="FirstName"
+                                           class="form-control"
+                                           placeholder="FirstName"
+                                           th:value="${userDto.getFirstName()}">
+                                </div>
+                            </div>
+                            <div class="row margin-top-bottom">
+                                <div class="col-4">
+                                    <label for="LastName">Last name</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text"
+                                           id="LastName"
+                                           name="LastName"
+                                           class="form-control"
+                                           placeholder="LastName"
+                                           th:value="${userDto.getLastName()}">
+                                </div>
+                            </div>
+                            <div class="row margin-top-bottom">
+                                <div class="col-4">
+                                    <label for="Email">Email</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text"
+                                           id="Email"
+                                           name="Email"
+                                           class="form-control"
+                                           placeholder="Email"
+                                           required="required"
+                                           th:value="${userDto.getEmail()}">
+                                </div>
+                            </div>
+                            <div class="row margin-top-bottom">
+                                <div class="col-4">
+                                    <label for="PhoneNumber">Phone number</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text"
+                                           id="PhoneNumber"
+                                           name="PhoneNumber"
+                                           class="form-control"
+                                           placeholder="PhoneNumber"
+                                           required="required"
+                                           th:value="${userDto.getPhoneNumber()}">
+                                </div>
+                            </div>
+                            <div class="row margin-top-bottom">
+                                <div class="col-4">
+                                    <label for="UserStreet">Street</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text"
+                                           id="UserStreet"
+                                           name="UserStreet"
+                                           class="form-control"
+                                           placeholder="UserStreet"
+                                           required="required"
+                                           th:value="${userDto.getUserStreet()}">
+                                </div>
+                            </div>
+                            <div class="row margin-top-bottom">
+                                <div class="col-4">
+                                    <label for="UserNumber">Street number</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text"
+                                           id="UserNumber"
+                                           name="UserNumber"
+                                           class="form-control"
+                                           placeholder="UserNumber"
+                                           required="required"
+                                           th:value="${userDto.getUserNumber()}">
+                                </div>
+                            </div>
+                            <div class="row margin-top-bottom">
+                                <div class="col-4">
+                                    <label for="UserCity">city</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text"
+                                           id="UserCity"
+                                           name="UserCity"
+                                           class="form-control"
+                                           placeholder="UserCity"
+                                           required="required"
+                                           th:value="${userDto.getUserCity()}">
+                                </div>
+                            </div>
+                            <div class="row margin-top-bottom">
+                                <div class="col-4">
+                                    <label for="UserCountry">Country</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="text"
+                                           id="UserCountry"
+                                           name="UserCountry"
+                                           class="form-control"
+                                           placeholder="UserCountry"
+                                           required="required"
+                                           th:value="${userDto.getUserCountry()}">
+                                </div>
+                            </div>
+                            <div class="row margin-top-bottom">
+                                <div class="col-4">
+                                    <label for="picture">Change picture</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="file"
+                                           id="picture"
+                                           name="picture"
+                                           class="form-control-file"
+                                           accept="image/png, image/jpeg">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

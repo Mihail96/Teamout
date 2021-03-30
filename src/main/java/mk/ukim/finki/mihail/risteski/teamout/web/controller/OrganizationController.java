@@ -10,8 +10,6 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
-import javax.websocket.server.PathParam;
-
 import static mk.ukim.finki.mihail.risteski.teamout.web.controller.BaseController.HandleBaseAttributes;
 
 @Controller
@@ -25,10 +23,11 @@ public class OrganizationController
         _organizationService = organizationService;
     }
 
-    @GetMapping(value = "/profile")
-    public String GetOrganizationProfile(Model model) throws NotFoundException
+    @GetMapping(value = "/{organizationId}/profile")
+    public String GetOrganizationProfile(@PathVariable(value="organizationId")Long id,
+                                         Model model) throws NotFoundException
     {
-        OrganizationDto organizationDto = _organizationService.GetOrganizationProfile();
+        OrganizationDto organizationDto = _organizationService.GetOrganizationProfile(id);
 
         model.addAttribute("organizationDto", organizationDto);
         model.addAttribute("bodyContent", "profile-organization");
@@ -37,12 +36,15 @@ public class OrganizationController
         return "root";
     }
 
-    @PostMapping(value = "/update/organizationId")
-    public String UpdateOrganization(OrganizationUpdateRequest organizationUpdateRequest,
-                                     @PathParam("organizationId") Long organizationId,
+    @PostMapping(value = "/{organizationId}/update")
+    public String UpdateOrganization(@PathVariable(value="organizationId")Long organizationId,
+                                     @RequestParam("logo") MultipartFile logoFile,
+                                     OrganizationUpdateRequest organizationUpdateRequest,
                                      Model model) throws NotFoundException
     {
-        OrganizationDto organizationDto = _organizationService.UpdateOrganization(organizationId, organizationUpdateRequest);
+        OrganizationDto organizationDto = _organizationService.UpdateOrganization(organizationId,
+                                                                                  organizationUpdateRequest,
+                                                                                  logoFile);
 
         model.addAttribute("organizationDto", organizationDto);
         model.addAttribute("bodyContent", "profile-organization");

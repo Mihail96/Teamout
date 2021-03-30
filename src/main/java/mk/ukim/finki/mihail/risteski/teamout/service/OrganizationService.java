@@ -44,20 +44,6 @@ public class OrganizationService implements IOrganizationService
     }
 
     @Override
-    public Organization GetOrganization(Long id) throws NotFoundException
-    {
-        Optional<Organization> optionalOrganization = _organizationRepository.findById(id);
-        if(optionalOrganization.isPresent())
-        {
-            return optionalOrganization.get();
-        }
-        else
-        {
-            throw new NotFoundException("Couldn't find the requested company by ID: " + id.toString());
-        }
-    }
-
-    @Override
     public void CreateOrganization(CreateOrganizationRequest request, MultipartFile logoFile, MultipartFile userImageFile)
     {
         if(logoFile != null && logoFile.getOriginalFilename() != null)
@@ -145,21 +131,9 @@ public class OrganizationService implements IOrganizationService
     }
 
     @Override
-    public OrganizationDto GetOrganizationProfile() throws NotFoundException
+    public OrganizationDto GetOrganizationProfile(Long organizationId) throws NotFoundException
     {
-        Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
-        User currentUser = (User)authentication.getPrincipal();
-
-        Optional<Organization> optionalOrganization =
-                currentUser.getUserInOrganizations().stream().filter(x -> x.getRole().getName().equals(RoleEnum.Owner.getName()))
-                        .map(x -> x.getOrganization()).findFirst();
-
-        if(optionalOrganization.isEmpty())
-        {
-            throw new NotFoundException("Couldn't find organization");
-        }
-
-        Organization organization = optionalOrganization.get();
+        Organization organization = GetOrganization(organizationId);
 
         OrganizationDto organizationDto = new OrganizationDto();
         organizationDto.setName(organization.getName());
@@ -194,13 +168,7 @@ public class OrganizationService implements IOrganizationService
             }
         }
 
-        Optional<Organization> optionalOrganization = _organizationRepository.findById(organizationId);
-        if(optionalOrganization.isEmpty())
-        {
-            throw new NotFoundException("Couldn't find organization");
-        }
-
-        Organization organization = optionalOrganization.get();
+        Organization organization = GetOrganization(organizationId);
 
         Address address = organization.getAddress();
         Image image = organization.getLogo();
@@ -231,5 +199,18 @@ public class OrganizationService implements IOrganizationService
         organizationDto.setOrganizationCountry(address.getCountry());
 
         return organizationDto;
+    }
+
+    private Organization GetOrganization(Long id) throws NotFoundException
+    {
+        Optional<Organization> optionalOrganization = _organizationRepository.findById(id);
+        if(optionalOrganization.isPresent())
+        {
+            return optionalOrganization.get();
+        }
+        else
+        {
+            throw new NotFoundException("Couldn't find the requested company by ID: " + id.toString());
+        }
     }
 }

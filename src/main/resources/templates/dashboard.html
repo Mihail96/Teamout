@@ -1,7 +1,8 @@
-<div class="container margin-top-bottom">
+<div class="container margin-top-bottom"
+     xmlns:th="http://www.thymeleaf.org">
     <div class="row margin-top-bottom">
         <div class="col-md-6">
-            <a href="/organization/profile">
+            <a th:href="${'/organization/' + currentUser.getUserOrganizationId().toString() + '/profile'}">
                 <div class="flex-container flex-center box box-shadow-hover height-5">
                     Organization profile
                 </div>

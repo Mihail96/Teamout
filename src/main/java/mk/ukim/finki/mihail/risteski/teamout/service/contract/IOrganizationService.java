@@ -9,11 +9,9 @@ import org.springframework.web.multipart.MultipartFile;
 
 public interface IOrganizationService
 {
-    Organization GetOrganization(Long id) throws NotFoundException;
-
     void CreateOrganization(CreateOrganizationRequest request, MultipartFile logoFile, MultipartFile userImageFile);
 
-    OrganizationDto GetOrganizationProfile() throws NotFoundException;
+    OrganizationDto GetOrganizationProfile(Long organizationId) throws NotFoundException;
 
     OrganizationDto UpdateOrganization(Long organizationId,
                                        OrganizationUpdateRequest organizationUpdateRequest,

@@ -1,6 +1,7 @@
 package mk.ukim.finki.mihail.risteski.teamout.model.entity;
 
 import lombok.Data;
+import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
@@ -15,6 +16,7 @@ public class Image
     String Name;
 
     @Lob
+    @Type(type = "org.hibernate.type.ImageType")
     byte[] Content;
 
     public Long getId()

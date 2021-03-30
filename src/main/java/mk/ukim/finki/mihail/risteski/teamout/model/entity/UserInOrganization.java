@@ -18,6 +18,8 @@ public class UserInOrganization
     @ManyToOne(fetch = FetchType.EAGER)
     private User User;
 
+    private Long UserFk;
+
     @ManyToOne(fetch = FetchType.EAGER)
     private Organization Organization;
 

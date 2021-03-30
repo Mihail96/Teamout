@@ -26,9 +26,10 @@ public class ImageController
         _imageRepository = imageRepository;
     }
 
-    @GetMapping("/image/{id}")
-    public void GetImage(@PathVariable Long id,
-                                     HttpServletResponse response) throws NotFoundException, IOException {
+    @GetMapping("/{organizationid}/image/{id}")
+    public void GetImage(@PathVariable Long organizationid,
+                         @PathVariable Long id,
+                         HttpServletResponse response) throws NotFoundException, IOException {
         response.setContentType("image/jpeg");
 
         Optional<Image> image = _imageRepository.findById(id);

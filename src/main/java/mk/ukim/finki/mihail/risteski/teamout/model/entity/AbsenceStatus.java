@@ -12,4 +12,22 @@ public class AbsenceStatus
     private Long Id;
 
     private String Name;
+
+    public Long getId() {
+        return this.Id;
+    }
+
+    public void setId(Long Id) {
+        this.Id = Id;
+    }
+
+    public String getName() {
+        return Name;
+    }
+
+    public void setName(String name) {
+        this.Name = name;
+    }
+
+
 }
