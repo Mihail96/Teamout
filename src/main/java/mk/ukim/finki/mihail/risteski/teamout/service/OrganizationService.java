@@ -4,12 +4,10 @@ import javassist.NotFoundException;
 import mk.ukim.finki.mihail.risteski.teamout.model.dto.OrganizationDto;
 import mk.ukim.finki.mihail.risteski.teamout.model.entity.*;
 import mk.ukim.finki.mihail.risteski.teamout.model.enumeration.RoleEnum;
-import mk.ukim.finki.mihail.risteski.teamout.model.request.CreateOrganizationRequest;
+import mk.ukim.finki.mihail.risteski.teamout.model.request.OrganizationCreateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.model.request.OrganizationUpdateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.repository.*;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IOrganizationService;
-import org.springframework.security.core.Authentication;
-import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -44,14 +42,14 @@ public class OrganizationService implements IOrganizationService
     }
 
     @Override
-    public void CreateOrganization(CreateOrganizationRequest request, MultipartFile logoFile, MultipartFile userImageFile)
+    public void CreateOrganization(OrganizationCreateRequest request, MultipartFile logoFile, MultipartFile userImageFile)
     {
         if(logoFile != null && logoFile.getOriginalFilename() != null)
         {
-            request.LogoName = StringUtils.cleanPath(logoFile.getOriginalFilename());
+            request.setLogoName(StringUtils.cleanPath(logoFile.getOriginalFilename()));
             try
             {
-                request.LogoContent = logoFile.getBytes();
+                request.setLogoContent(logoFile.getBytes());
             }
             catch (IOException e)
             {
@@ -61,10 +59,10 @@ public class OrganizationService implements IOrganizationService
 
         if(userImageFile != null && userImageFile.getOriginalFilename() != null)
         {
-            request.PictureName = StringUtils.cleanPath(userImageFile.getOriginalFilename());
+            request.setPictureName(StringUtils.cleanPath(userImageFile.getOriginalFilename()));
             try
             {
-                request.PictureContent = userImageFile.getBytes();
+                request.setPictureContent(userImageFile.getBytes());
             }
             catch (IOException e)
             {
@@ -74,13 +72,13 @@ public class OrganizationService implements IOrganizationService
 
         Organization organization = new Organization();
 
-        organization.setName(request.Name);
+        organization.setName(request.getName());
 
         Address organizationAddress = new Address();
-        organizationAddress.setCity(request.OrganizationCity);
-        organizationAddress.setStreet(request.OrganizationStreet);
-        organizationAddress.setNumber(request.OrganizationStreetNumber);
-        organizationAddress.setCountry(request.OrganizationCountry);
+        organizationAddress.setCity(request.getOrganizationCity());
+        organizationAddress.setStreet(request.getOrganizationStreet());
+        organizationAddress.setNumber(request.getOrganizationStreetNumber());
+        organizationAddress.setCountry(request.getOrganizationCountry());
 
         organization.setAddress(organizationAddress);
 
@@ -88,34 +86,34 @@ public class OrganizationService implements IOrganizationService
         owner.setRole(RoleEnum.ToRole(RoleEnum.Owner));
 
         User user = new User();
-        user.setFirstName(request.FirstName);
-        user.setLastName(request.LastName);
-        user.setEmail(request.Email);
-        user.setPasswordHash(_passwordEncoder.encode(request.Password));
-        user.setPhoneNumber(request.PhoneNumber);
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setEmail(request.getEmail());
+        user.setPasswordHash(_passwordEncoder.encode(request.getPassword()));
+        user.setPhoneNumber(request.getPhoneNumber());
 
         Address userAddress = new Address();
-        userAddress.setCity(request.UserCity);
-        userAddress.setStreet(request.UserStreet);
-        userAddress.setNumber(request.UserStreetNumber);
-        userAddress.setCountry(request.UserCountry);
+        userAddress.setCity(request.getUserCity());
+        userAddress.setStreet(request.getUserStreet());
+        userAddress.setNumber(request.getUserStreetNumber());
+        userAddress.setCountry(request.getUserCountry());
 
         user.setAddress(userAddress);
 
-        if(!request.LogoName.equals("") && request.LogoContent.length != 0)
+        if(!request.getLogoName().equals("") && request.getLogoContent().length != 0)
         {
             Image logo = new Image();
-            logo.setName(request.LogoName);
-            logo.setContent(request.LogoContent);
+            logo.setName(request.getLogoName());
+            logo.setContent(request.getLogoContent());
             organization.setLogo(logo);
             _imageRepository.save(logo);
         }
 
-        if(!request.PictureName.equals("") && request.PictureContent.length != 0)
+        if(!request.getPictureName().equals("") && request.getPictureContent().length != 0)
         {
             Image picture = new Image();
-            picture.setName(request.PictureName);
-            picture.setContent(request.PictureContent);
+            picture.setName(request.getPictureName());
+            picture.setContent(request.getPictureContent());
             user.setPicture(picture);
             _imageRepository.save(picture);
         }
@@ -133,21 +131,7 @@ public class OrganizationService implements IOrganizationService
     @Override
     public OrganizationDto GetOrganizationProfile(Long organizationId) throws NotFoundException
     {
-        Organization organization = GetOrganization(organizationId);
-
-        OrganizationDto organizationDto = new OrganizationDto();
-        organizationDto.setName(organization.getName());
-        organizationDto.setOrganizationCity(organization.getAddress().getCity());
-        organizationDto.setOrganizationStreet(organization.getAddress().getStreet());
-        organizationDto.setOrganizationStreetNumber(organization.getAddress().getNumber());
-        organizationDto.setOrganizationCountry(organization.getAddress().getCountry());
-
-        if (organization.getLogo() != null)
-        {
-            organizationDto.setImageId(organization.getLogo().getId());
-        }
-
-        return organizationDto;
+        return getOrganizationDto(GetOrganization(organizationId));
     }
 
     @Override
@@ -157,10 +141,10 @@ public class OrganizationService implements IOrganizationService
     {
         if(logoFile != null && logoFile.getOriginalFilename() != null)
         {
-            request.LogoName = StringUtils.cleanPath(logoFile.getOriginalFilename());
+            request.setLogoName(StringUtils.cleanPath(logoFile.getOriginalFilename()));
             try
             {
-                request.LogoContent = logoFile.getBytes();
+                request.setLogoContent(logoFile.getBytes());
             }
             catch (IOException e)
             {
@@ -181,7 +165,7 @@ public class OrganizationService implements IOrganizationService
         address.setCountry(request.getOrganizationCountry());
         _addressRepository.save(address);
 
-        if(!request.LogoName.equals("") && request.LogoContent.length != 0)
+        if(!request.getLogoName().equals("") && request.getLogoContent().length != 0)
         {
             image.setName(request.getLogoName());
             image.setContent(request.getLogoContent());
@@ -190,14 +174,22 @@ public class OrganizationService implements IOrganizationService
 
         _organizationRepository.saveAndFlush(organization);
 
+        return getOrganizationDto(organization);
+    }
+
+    private OrganizationDto getOrganizationDto(Organization organization)
+    {
         OrganizationDto organizationDto = new OrganizationDto();
         organizationDto.setName(organization.getName());
-        organizationDto.setImageId(image.getId());
-        organizationDto.setOrganizationCity(address.getCity());
-        organizationDto.setOrganizationStreet(address.getStreet());
-        organizationDto.setOrganizationStreetNumber(address.getNumber());
-        organizationDto.setOrganizationCountry(address.getCountry());
+        organizationDto.setOrganizationCity(organization.getAddress().getCity());
+        organizationDto.setOrganizationStreet(organization.getAddress().getStreet());
+        organizationDto.setOrganizationStreetNumber(organization.getAddress().getNumber());
+        organizationDto.setOrganizationCountry(organization.getAddress().getCountry());
 
+        if (organization.getLogo() != null)
+        {
+            organizationDto.setImageId(organization.getLogo().getId());
+        }
         return organizationDto;
     }
 

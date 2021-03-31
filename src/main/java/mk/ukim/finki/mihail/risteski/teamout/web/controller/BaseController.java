@@ -37,5 +37,9 @@ public class BaseController
 
             model.addAttribute("currentUser", currentUser);
         }
+        else
+        {
+            model.addAttribute("currentUser", null);
+        }
     }
 }

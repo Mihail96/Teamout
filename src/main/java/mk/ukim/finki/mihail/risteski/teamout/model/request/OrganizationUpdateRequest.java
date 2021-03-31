@@ -2,13 +2,13 @@ package mk.ukim.finki.mihail.risteski.teamout.model.request;
 
 public class OrganizationUpdateRequest
 {
-    public String Name;
-    public String OrganizationCity;
-    public String OrganizationStreet;
-    public String OrganizationStreetNumber;
-    public String OrganizationCountry;
-    public String LogoName;
-    public byte[] LogoContent;
+    private String Name;
+    private String OrganizationCity;
+    private String OrganizationStreet;
+    private String OrganizationStreetNumber;
+    private String OrganizationCountry;
+    private String LogoName;
+    private byte[] LogoContent;
 
 
     public String getName() {

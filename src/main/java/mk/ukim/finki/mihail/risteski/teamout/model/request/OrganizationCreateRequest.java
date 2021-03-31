@@ -1,26 +1,26 @@
 package mk.ukim.finki.mihail.risteski.teamout.model.request;
 
-public class CreateOrganizationRequest
+public class OrganizationCreateRequest
 {
-    public String Name;
-    public String OrganizationCity;
-    public String OrganizationStreet;
-    public String OrganizationStreetNumber;
-    public String OrganizationCountry;
-    public String LogoName;
-    public byte[] LogoContent;
-    
-    public String FirstName;
-    public String LastName;
-    public String Email;
-    public CharSequence Password;
-    public String PhoneNumber;
-    public String UserCity;
-    public String UserStreet;
-    public String UserStreetNumber;
-    public String UserCountry;
-    public String PictureName;
-    public byte[] PictureContent;
+    private String Name;
+    private String OrganizationCity;
+    private String OrganizationStreet;
+    private String OrganizationStreetNumber;
+    private String OrganizationCountry;
+    private String LogoName;
+    private byte[] LogoContent;
+
+    private String FirstName;
+    private String LastName;
+    private String Email;
+    private CharSequence Password;
+    private String PhoneNumber;
+    private String UserCity;
+    private String UserStreet;
+    private String UserStreetNumber;
+    private String UserCountry;
+    private String PictureName;
+    private byte[] PictureContent;
 
     public String getName()
     {

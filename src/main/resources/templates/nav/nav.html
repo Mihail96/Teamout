@@ -1,45 +1,45 @@
 <div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
-    <nav class="navbar navbar-dark bg-dark">
-        <div class="container">
-            <a class="navbar-brand" href="/organization/dashboard">Teamout</a>
-            <ul class="navbar-nav m-auto">
-                <li class="nav-item m-auto" sec:authorize="isAuthenticated()">
-                    <a class="nav-link active"
-                       href="/organization/dashboard">
-                        Dashboard
-                    </a>
-                </li>
-                <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
-                    <a class="nav-link active"
+    <nav class="bg-dark">
+        <div class="container flex-container flex-container-row">
+            <a class="navbar-main" href="/organization/dashboard">Teamout</a>
+            <ul class="navbar-links">
+                <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                    <a class="navbar-link"
                        th:href="${'/organization/'+ currentUser.getUserOrganizationId().toString() + '/profile/'}">
                         Organization
                     </a>
                 </li>
-                <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
-                    <a class="nav-link active"
+                <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                    <a class="navbar-link"
                        th:href="${'/organization/'+ currentUser.getUserOrganizationId().toString() + '/user/'+ currentUser.getUserId().toString() +'/profile'}">
                         My profile
                     </a>
                 </li>
-                <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
-                    <a class="nav-link active"
+                <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                    <a class="navbar-link"
                        href="/Employees">
                         Employees
                     </a>
                 </li>
-                <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
-                    <a class="nav-link active"
+                <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                    <a class="navbar-link"
                        href="/manufacturers">
                         Reports
                     </a>
                 </li>
-                <li class="nav-item m-auto" sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
-                    <a class="nav-link active"
+                <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                    <a class="navbar-link"
                        href="/manufacturers">
                         Statistics
                     </a>
                 </li>
             </ul>
+            <span sec:authorize="!isAuthenticated()">
+UnAuth
+            </span>
+            <span sec:authorize="isAuthenticated()">
+Auth
+            </span>
         </div>
     </nav>
 </div>

@@ -1,6 +1,5 @@
 package mk.ukim.finki.mihail.risteski.teamout.web.controller;
 
-import mk.ukim.finki.mihail.risteski.teamout.model.request.CreateOrganizationRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;

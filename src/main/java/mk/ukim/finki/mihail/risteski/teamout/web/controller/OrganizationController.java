@@ -2,7 +2,7 @@ package mk.ukim.finki.mihail.risteski.teamout.web.controller;
 
 import javassist.NotFoundException;
 import mk.ukim.finki.mihail.risteski.teamout.model.dto.OrganizationDto;
-import mk.ukim.finki.mihail.risteski.teamout.model.request.CreateOrganizationRequest;
+import mk.ukim.finki.mihail.risteski.teamout.model.request.OrganizationCreateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.model.request.OrganizationUpdateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IOrganizationService;
 import org.springframework.stereotype.Controller;
@@ -54,7 +54,7 @@ public class OrganizationController
     }
 
     @PostMapping(value = "/create")
-    public String CreateOrganization(CreateOrganizationRequest organizationRequest,
+    public String CreateOrganization(OrganizationCreateRequest organizationRequest,
                                      @RequestParam("userImage") MultipartFile userImageFile,
                                      @RequestParam("logo") MultipartFile logoFile,
                                      Model model)

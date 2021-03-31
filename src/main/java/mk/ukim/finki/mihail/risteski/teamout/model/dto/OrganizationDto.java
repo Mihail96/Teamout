@@ -2,12 +2,12 @@ package mk.ukim.finki.mihail.risteski.teamout.model.dto;
 
 public class OrganizationDto
 {
-    public String Name;
-    public String OrganizationCity;
-    public String OrganizationStreet;
-    public String OrganizationStreetNumber;
-    public String OrganizationCountry;
-    public Long ImageId;
+    private String Name;
+    private String OrganizationCity;
+    private String OrganizationStreet;
+    private String OrganizationStreetNumber;
+    private String OrganizationCountry;
+    private Long ImageId;
 
     public String getName() {
         return Name;
