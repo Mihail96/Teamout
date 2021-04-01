@@ -1,45 +1,64 @@
 <div xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
     <nav class="bg-dark">
-        <div class="container flex-container flex-container-row">
-            <a class="navbar-main" href="/organization/dashboard">Teamout</a>
-            <ul class="navbar-links">
-                <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
-                    <a class="navbar-link"
-                       th:href="${'/organization/'+ currentUser.getUserOrganizationId().toString() + '/profile/'}">
-                        Organization
-                    </a>
-                </li>
-                <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
-                    <a class="navbar-link"
-                       th:href="${'/organization/'+ currentUser.getUserOrganizationId().toString() + '/user/'+ currentUser.getUserId().toString() +'/profile'}">
-                        My profile
-                    </a>
-                </li>
-                <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
-                    <a class="navbar-link"
-                       href="/Employees">
-                        Employees
-                    </a>
-                </li>
-                <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
-                    <a class="navbar-link"
-                       href="/manufacturers">
-                        Reports
-                    </a>
-                </li>
-                <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
-                    <a class="navbar-link"
-                       href="/manufacturers">
-                        Statistics
-                    </a>
-                </li>
-            </ul>
-            <span sec:authorize="!isAuthenticated()">
-UnAuth
-            </span>
-            <span sec:authorize="isAuthenticated()">
-Auth
-            </span>
+        <div class="container">
+            <div class="row">
+                <div class="col-7 flex-container flex-container-row">
+                    <a class="navbar-main" href="/organization/dashboard">Teamout</a>
+                    <ul class="navbar-links">
+                        <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                            <a class="navbar-link"
+                               th:href="${'/organization/'+ currentUser.getUserOrganizationId().toString() + '/profile/'}">
+                                Organization
+                            </a>
+                        </li>
+                        <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                            <a class="navbar-link"
+                               th:href="${'/organization/'+ currentUser.getUserOrganizationId().toString() + '/user/'+ currentUser.getUserId().toString() +'/profile'}">
+                                My profile
+                            </a>
+                        </li>
+                        <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                            <a class="navbar-link"
+                               th:href="${'/organization/'+ currentUser.getUserOrganizationId().toString() + '/employees/'}">
+                                Employees
+                            </a>
+                        </li>
+                        <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                            <a class="navbar-link"
+                               href="/manufacturers">
+                                Reports
+                            </a>
+                        </li>
+                        <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                            <a class="navbar-link"
+                               href="/manufacturers">
+                                Statistics
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-5 flex-container flex-container-row flex-container-justify-end">
+                    <span class="navbar-auth" sec:authorize="!isAuthenticated()">
+                        <a class="navbar-auth"
+                           href="/login">
+                            Login
+                        </a>
+                        <a class="navbar-auth"
+                           href="/register/organization">
+                            Register
+                        </a>
+                    </span>
+                    <span class="navbar-auth" sec:authorize="isAuthenticated()">
+                        <span class="navbar-auth"
+                              th:text="${currentUser.getEmail()}">
+                        </span>
+                        <a class="navbar-auth"
+                           href="/logout">
+                            Logout
+                        </a>
+                    </span>
+                </div>
+            </div>
         </div>
     </nav>
 </div>

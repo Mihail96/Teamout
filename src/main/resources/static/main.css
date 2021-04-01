@@ -7,14 +7,22 @@
     flex-direction: row;
 }
 
+.flex-container-justify-end {
+    justify-content: flex-end;
+}
+
 .navbar-main {
     display: inline-block;
-    padding-top: 0.3125rem;
-    padding-bottom: 0.3125rem;
-    margin-right: 1rem;
-    font-size: 1.25rem;
+    padding-top: 10px;
+    padding-bottom: 10px;
+    font-size: 20px;
     line-height: inherit;
     white-space: nowrap;
+    color: rgba(255, 255, 255, 1);
+}
+
+.navbar-main:hover, .navbar-main:focus {
+    text-decoration: none;
     color: rgba(255, 255, 255, 1);
 }
 
@@ -24,16 +32,28 @@
     -ms-flex-direction: row;
     flex-direction: row;
     list-style: none;
+    margin-bottom: 0px;
 }
 
 .navbar-link {
     display: block;
-    padding: 9px 15px;
+    padding: 14px 15px;
     color: rgba(255, 255, 255, 1);
 }
 
 .navbar-link:hover, .navbar-link:focus {
     text-decoration: none;
+    color: rgba(255, 255, 255, 1);
+}
+
+.navbar-auth {
+    padding: 14px 15px;
+    color: rgba(255, 255, 255, 1);
+}
+
+.navbar-auth:hover, .navbar-auth:focus {
+    text-decoration: none;
+    color: rgba(255, 255, 255, 1);
 }
 
 .box {

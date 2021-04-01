@@ -24,4 +24,54 @@ public class Employee
 
     @OneToMany
     private List<Absence> Absences;
+
+    public Long getId()
+    {
+        return Id;
+    }
+
+    public void setId(Long id)
+    {
+        Id = id;
+    }
+
+    public mk.ukim.finki.mihail.risteski.teamout.model.entity.UserInOrganization getUserInOrganization()
+    {
+        return UserInOrganization;
+    }
+
+    public void setUserInOrganization(mk.ukim.finki.mihail.risteski.teamout.model.entity.UserInOrganization userInOrganization)
+    {
+        UserInOrganization = userInOrganization;
+    }
+
+    public List<Employee> getResponsibleFor()
+    {
+        return ResponsibleFor;
+    }
+
+    public void setResponsibleFor(List<Employee> responsibleFor)
+    {
+        ResponsibleFor = responsibleFor;
+    }
+
+    public List<Employee> getResponsibleTo()
+    {
+        return ResponsibleTo;
+    }
+
+    public void setResponsibleTo(List<Employee> responsibleTo)
+    {
+        ResponsibleTo = responsibleTo;
+    }
+
+    public List<Absence> getAbsences()
+    {
+        return Absences;
+    }
+
+    public void setAbsences(List<Absence> absences)
+    {
+        Absences = absences;
+    }
 }

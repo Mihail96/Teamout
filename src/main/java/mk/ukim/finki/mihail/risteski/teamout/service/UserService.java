@@ -9,6 +9,7 @@ import mk.ukim.finki.mihail.risteski.teamout.repository.AddressRepository;
 import mk.ukim.finki.mihail.risteski.teamout.repository.ImageRepository;
 import mk.ukim.finki.mihail.risteski.teamout.repository.UserRepository;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IUserService;
+import mk.ukim.finki.mihail.risteski.teamout.util.UserUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
@@ -43,7 +44,7 @@ public class UserService implements IUserService
     @Override
     public UserDto GetUserProfile(Long organizationId, Long userId)
     {
-        return getUserDto(_userRepository.GetUser(organizationId, userId));
+        return UserUtils.CreateUserDto(_userRepository.GetUser(organizationId, userId));
     }
 
     @Override
@@ -90,28 +91,6 @@ public class UserService implements IUserService
 
         _userRepository.saveAndFlush(user);
 
-        return getUserDto(user);
-    }
-
-    private UserDto getUserDto(User user)
-    {
-        UserDto userDto = new UserDto();
-        userDto.setFirstName(user.getFirstName());
-        userDto.setLastName(user.getLastName());
-        userDto.setEmail(user.getEmail());
-        userDto.setPhoneNumber(user.getPhoneNumber());
-
-        Address address = user.getAddress();
-        userDto.setUserCity(address.getCity());
-        userDto.setUserStreet(address.getStreet());
-        userDto.setUserNumber(address.getNumber());
-        userDto.setUserCountry(address.getCountry());
-
-        Image image = user.getPicture();
-        if (image != null)
-        {
-            userDto.setPictureId(image.getId());
-        }
-        return userDto;
+        return UserUtils.CreateUserDto(user);
     }
 }

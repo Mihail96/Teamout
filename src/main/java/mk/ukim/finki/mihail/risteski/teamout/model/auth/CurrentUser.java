@@ -10,6 +10,12 @@ public class CurrentUser
 
     private Set<String> Roles;
 
+    private String FirstName;
+
+    private String LastName;
+
+    private String Email;
+
     public Long getUserOrganizationId()
     {
         return UserOrganizationId;
@@ -38,5 +44,35 @@ public class CurrentUser
     public void setRoles(Set<String> roles)
     {
         Roles = roles;
+    }
+
+    public String getFirstName()
+    {
+        return FirstName;
+    }
+
+    public void setFirstName(String firstName)
+    {
+        FirstName = firstName;
+    }
+
+    public String getLastName()
+    {
+        return LastName;
+    }
+
+    public void setLastName(String lastName)
+    {
+        LastName = lastName;
+    }
+
+    public String getEmail()
+    {
+        return Email;
+    }
+
+    public void setEmail(String email)
+    {
+        Email = email;
     }
 }

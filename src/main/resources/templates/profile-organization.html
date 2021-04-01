@@ -9,7 +9,7 @@
                     <img class="image-icon"
                          th:if="${organizationDto.getImageId() != null}"
                          th:src="${'/organization/' +  currentUser.getUserOrganizationId().toString() + '/image/' + organizationDto.getImageId().toString()}">
-                    Organization profile
+                    <span th:text="${organizationDto.getName()}"></span>
                     <button id="submit"
                             class="btn btn-lg btn-primary"
                             type="submit">Save</button>

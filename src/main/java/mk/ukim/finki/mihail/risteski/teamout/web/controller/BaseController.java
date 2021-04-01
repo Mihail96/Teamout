@@ -30,6 +30,9 @@ public class BaseController
             CurrentUser currentUser = new CurrentUser();
             optionalOrganization.ifPresent(organization -> currentUser.setUserOrganizationId(organization.getId()));
             currentUser.setUserId(user.getId());
+            currentUser.setFirstName(user.getFirstName());
+            currentUser.setLastName(user.getLastName());
+            currentUser.setEmail(user.getEmail());
             currentUser.setRoles(user.getAuthorities()
                                      .stream()
                                      .map(GrantedAuthority::getAuthority)
