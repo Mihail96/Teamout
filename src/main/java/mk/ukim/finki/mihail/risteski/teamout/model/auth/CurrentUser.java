@@ -4,7 +4,11 @@ import java.util.Set;
 
 public class CurrentUser
 {
-    private Long UserOrganizationId;
+    private Long OrganizationId;
+
+    private Long LogoId;
+
+    private String OrganizationName;
 
     private Long UserId;
 
@@ -16,14 +20,14 @@ public class CurrentUser
 
     private String Email;
 
-    public Long getUserOrganizationId()
+    public Long getOrganizationId()
     {
-        return UserOrganizationId;
+        return OrganizationId;
     }
 
-    public void setUserOrganizationId(Long userOrganizationId)
+    public void setOrganizationId(Long organizationId)
     {
-        UserOrganizationId = userOrganizationId;
+        OrganizationId = organizationId;
     }
 
     public Long getUserId()
@@ -74,5 +78,25 @@ public class CurrentUser
     public void setEmail(String email)
     {
         Email = email;
+    }
+
+    public Long getLogoId()
+    {
+        return LogoId;
+    }
+
+    public void setLogoId(Long logoId)
+    {
+        LogoId = logoId;
+    }
+
+    public String getOrganizationName()
+    {
+        return OrganizationName;
+    }
+
+    public void setOrganizationName(String organizationName)
+    {
+        OrganizationName = organizationName;
     }
 }

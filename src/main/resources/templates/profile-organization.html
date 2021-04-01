@@ -1,5 +1,5 @@
 <form xmlns:th="http://www.thymeleaf.org"
-      th:action="${'/organization/' + currentUser.getUserOrganizationId().toString() + '/update'}"
+      th:action="${'/organization/' + currentUser.getOrganizationId().toString() + '/update'}"
       enctype="multipart/form-data"
       method="post">
     <div class="container margin-top-bottom">
@@ -7,9 +7,9 @@
             <div class="col-12">
                 <h1>
                     <img class="image-icon"
-                         th:if="${organizationDto.getImageId() != null}"
-                         th:src="${'/organization/' +  currentUser.getUserOrganizationId().toString() + '/image/' + organizationDto.getImageId().toString()}">
-                    <span th:text="${organizationDto.getName()}"></span>
+                         th:if="${currentUser.getLogoId() != null}"
+                         th:src="${'/organization/' +  currentUser.getOrganizationId().toString() + '/image/' + currentUser.getLogoId().toString()}">
+                    <span th:text="${currentUser.getOrganizationName()}"></span>
                     <button id="submit"
                             class="btn btn-lg btn-primary"
                             type="submit">Save</button>

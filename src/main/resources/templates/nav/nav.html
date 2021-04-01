@@ -7,19 +7,19 @@
                     <ul class="navbar-links">
                         <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
                             <a class="navbar-link"
-                               th:href="${'/organization/'+ currentUser.getUserOrganizationId().toString() + '/profile/'}">
+                               th:href="${'/organization/'+ currentUser.getOrganizationId().toString() + '/profile/'}">
                                 Organization
                             </a>
                         </li>
                         <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
                             <a class="navbar-link"
-                               th:href="${'/organization/'+ currentUser.getUserOrganizationId().toString() + '/user/'+ currentUser.getUserId().toString() +'/profile'}">
+                               th:href="${'/organization/'+ currentUser.getOrganizationId().toString() + '/user/'+ currentUser.getUserId().toString() +'/profile'}">
                                 My profile
                             </a>
                         </li>
                         <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
                             <a class="navbar-link"
-                               th:href="${'/organization/'+ currentUser.getUserOrganizationId().toString() + '/employees/'}">
+                               th:href="${'/organization/'+ currentUser.getOrganizationId().toString() + '/employee/list'}">
                                 Employees
                             </a>
                         </li>

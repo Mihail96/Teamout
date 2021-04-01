@@ -12,8 +12,8 @@ public interface EmployeeRepository extends JpaRepository<Employee, Long>
 {
     @Query("SELECT e " +
            "FROM Employee e " +
-           "JOIN UserInOrganization.Employee uio " +
-           "JOIN Organization.UsersInOrganization o " +
+           "JOIN e.UserInOrganization uio " +
+           "JOIN uio.Organization o " +
            "WHERE o.Id = ?1")
     List<Employee> GetEmployeesInOrganization(Long organizationId);
 }

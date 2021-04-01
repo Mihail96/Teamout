@@ -10,7 +10,6 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.ui.Model;
 
 import java.util.Optional;
-import java.util.Set;
 import java.util.stream.Collectors;
 
 public class BaseController
@@ -28,7 +27,12 @@ public class BaseController
                                                               .map(UserInOrganization::getOrganization)
                                                               .findFirst();
             CurrentUser currentUser = new CurrentUser();
-            optionalOrganization.ifPresent(organization -> currentUser.setUserOrganizationId(organization.getId()));
+            optionalOrganization.ifPresent(organization ->
+                                           {
+                                               currentUser.setOrganizationId(organization.getId());
+                                               currentUser.setOrganizationName(organization.getName());
+                                               currentUser.setLogoId(organization.getLogo().getId());
+                                           });
             currentUser.setUserId(user.getId());
             currentUser.setFirstName(user.getFirstName());
             currentUser.setLastName(user.getLastName());
