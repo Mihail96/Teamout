@@ -21,8 +21,8 @@ public class RegisterController
         return "root";
     }
 
-    @GetMapping(value = "/employee/{employeeId}")
-    public String CreateUser(@PathVariable(value="employeeId") Long employeeId,
+    @GetMapping(value = "/employee/{activationCode}")
+    public String CreateEmployeeUser(@PathVariable(value="activationCode") String activationCode,
                              Model model)
     {
         model.addAttribute("bodyContent", "register-employee");

@@ -32,7 +32,7 @@ public class TeamoutApplication {
         mailSender.setPort(587);
 
         mailSender.setUsername("tteamout@gmail.com");
-        mailSender.setPassword("1q2w3e4r5t6y7u.");
+        mailSender.setPassword("rygskxkzjgelxsoe");
 
         Properties props = mailSender.getJavaMailProperties();
         props.put("mail.transport.protocol", "smtp");

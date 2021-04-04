@@ -19,7 +19,7 @@ public class BaseController
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
 
         if(authentication.isAuthenticated() &&
-          !authentication.getAuthorities().stream().anyMatch(x -> x.getAuthority().equals("ROLE_ANONYMOUS")))
+          authentication.getAuthorities().stream().noneMatch(x -> x.getAuthority().equals("ROLE_ANONYMOUS")))
         {
             User user = (User)authentication.getPrincipal();
             Optional<Organization> optionalOrganization = user.getUserInOrganizations()
@@ -31,7 +31,10 @@ public class BaseController
                                            {
                                                currentUser.setOrganizationId(organization.getId());
                                                currentUser.setOrganizationName(organization.getName());
-                                               currentUser.setLogoId(organization.getLogo().getId());
+                                               if(organization.getLogo() != null)
+                                               {
+                                                   currentUser.setLogoId(organization.getLogo().getId());
+                                               }
                                            });
             currentUser.setUserId(user.getId());
             currentUser.setFirstName(user.getFirstName());

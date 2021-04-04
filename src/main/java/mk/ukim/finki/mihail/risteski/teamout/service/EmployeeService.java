@@ -53,25 +53,23 @@ public class EmployeeService implements IEmployeeService
         DraftEmployee draftEmployee = new DraftEmployee();
         draftEmployee.setActivationCode(generatedString);
 
-        _draftEmployeeRepository.save(draftEmployee);
+        _draftEmployeeRepository.saveAndFlush(draftEmployee);
 
         Organization organization = _organizationRepository.GetOrganizationById(organizationId);
         String subject = "Invitation to make your account in Teamout";
 
-        StringBuilder stringBuilder = new StringBuilder();
-        stringBuilder.append("Hello, your organization ");
-        stringBuilder.append(organization.getName());
-        stringBuilder.append(" has invited you to create you account.\n");
-        stringBuilder.append("You can follow this link to create your user: ");
-        stringBuilder.append("http://localhost:5555");
-        stringBuilder.append("/register");
-        stringBuilder.append("/employee/");
-        stringBuilder.append(generatedString);
-        stringBuilder.append(" \n");
-        stringBuilder.append(" \n");
-        stringBuilder.append("Teamout");
-
-        _emailService.SendSimpleMessage(employeeCreateRequest.getEmail(), subject, stringBuilder.toString());
+        String text = "Hello, your organization " +
+                organization.getName() +
+                " has invited you to create you account.\n" +
+                "You can follow this link to create your user: " +
+                "http://localhost:5555" +
+                "/register" +
+                "/employee/" +
+                generatedString +
+                " \n" +
+                " \n" +
+                "Teamout";
+        _emailService.SendSimpleMessage(employeeCreateRequest.getEmail(), subject, text);
 
         return getEmployeeDtos(organizationId);
     }

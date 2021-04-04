@@ -1,0 +1,43 @@
+<form xmlns:th="http://www.thymeleaf.org"
+      th:action="${'/organization/' + currentUser.getOrganizationId().toString() + '/employee/invite'}"
+      enctype="multipart/form-data"
+      method="post">
+    <div class="container margin-top-bottom">
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+                <h1>
+                    <img class="image-icon"
+                         src="#"
+                         alt="#"
+                         th:if="${currentUser.getLogoId() != null}"
+                         th:src="${'/organization/' +  currentUser.getOrganizationId().toString() + '/image/' + currentUser.getLogoId().toString()}">
+                    <span th:text="${currentUser.getOrganizationName()}"></span>
+                    <button id="submit"
+                            class="btn btn-lg btn-primary"
+                            type="submit">Invite</button>
+                </h1>
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="offset-3 col-6">
+                <label for="FirstName">First name</label>
+                <input type="text" id="FirstName" name="FirstName" class="form-control"
+                       placeholder="First name" required="required">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="offset-3 col-6">
+                <label for="LastName">Last name</label>
+                <input type="text" id="LastName" name="LastName" class="form-control"
+                       placeholder="Last name" required="required">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="offset-3 col-6">
+                <label for="Email">Email</label>
+                <input type="text" id="Email" name="Email" class="form-control"
+                       placeholder="Email" required="required">
+            </div>
+        </div>
+    </div>
+</form>

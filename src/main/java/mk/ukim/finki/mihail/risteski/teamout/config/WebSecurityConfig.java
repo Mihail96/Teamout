@@ -23,7 +23,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     protected void configure(HttpSecurity http) throws Exception
     {
         http.csrf().disable()
-            .authorizeRequests().antMatchers("/register/organization", "/organization/create", "/*.css").permitAll()
+            .authorizeRequests().antMatchers("/register/organization", "/organization/create", "/*.css", "http://localhost:5555/register/employee/*").permitAll()
             .anyRequest().authenticated()
             .and()
             .formLogin().loginPage("/login").permitAll().usernameParameter("email").passwordParameter("password").failureUrl("/login?error-BadCredentials").defaultSuccessUrl("/organization/dashboard", true)
@@ -33,7 +33,7 @@ public class WebSecurityConfig extends WebSecurityConfigurerAdapter
     }
 
     @Override
-    protected void configure(AuthenticationManagerBuilder auth) throws Exception
+    protected void configure(AuthenticationManagerBuilder auth)
     {
         auth.authenticationProvider(_customAuthenticationProvider);
     }
