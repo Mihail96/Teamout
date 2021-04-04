@@ -18,12 +18,10 @@ public class UserInOrganization
     @ManyToOne(fetch = FetchType.EAGER)
     private User User;
 
-    private Long UserFk;
-
     @ManyToOne(fetch = FetchType.EAGER)
     private Organization Organization;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne
     private Employee Employee;
 
     public Long getId()

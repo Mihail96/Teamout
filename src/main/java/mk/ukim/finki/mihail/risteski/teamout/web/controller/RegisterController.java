@@ -1,5 +1,8 @@
 package mk.ukim.finki.mihail.risteski.teamout.web.controller;
 
+import javassist.NotFoundException;
+import mk.ukim.finki.mihail.risteski.teamout.model.dto.DraftUserDto;
+import mk.ukim.finki.mihail.risteski.teamout.service.UserService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -12,22 +15,28 @@ import static mk.ukim.finki.mihail.risteski.teamout.web.controller.BaseControlle
 @RequestMapping(value = "/register")
 public class RegisterController
 {
+    private final UserService _userService;
+
+    public RegisterController(UserService userService)
+    {
+        _userService = userService;
+    }
+
     @GetMapping(value = "/organization")
     public String CreateOrganization(Model model)
     {
         model.addAttribute("bodyContent", "register-organization");
-        HandleBaseAttributes(model);
-
         return "root";
     }
 
-    @GetMapping(value = "/employee/{activationCode}")
-    public String CreateEmployeeUser(@PathVariable(value="activationCode") String activationCode,
-                             Model model)
+    @GetMapping(value = "/user/{activationCode}")
+    public String GetCreateDraftUser(@PathVariable(value="activationCode") String activationCode,
+                                     Model model) throws NotFoundException
     {
-        model.addAttribute("bodyContent", "register-employee");
-        HandleBaseAttributes(model);
+        DraftUserDto draftUserDto = _userService.GetDraftUser(activationCode);
 
+        model.addAttribute("bodyContent", "register-user");
+        model.addAttribute("draftUserDto", draftUserDto);
         return "root";
     }
 }

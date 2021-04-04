@@ -1,5 +1,5 @@
 <form xmlns:th="http://www.thymeleaf.org"
-      th:action="${'/organization/' + currentUser.getOrganizationId().toString() + '/user/ ' + currentUser.getUserId() + '/update'}"
+      th:action="${'/user/ ' + currentUser.getUserId() + '/update'}"
       enctype="multipart/form-data"
       method="post">
     <div class="container margin-top-bottom">

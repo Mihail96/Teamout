@@ -1,0 +1,97 @@
+<form class="margin-top-bottom"
+      action="/user/create"
+      enctype="multipart/form-data"
+      method="post">
+    <div class="container form-group"
+         xmlns="http://www.w3.org/1999/xhtml"
+         xmlns:th="http://www.thymeleaf.org">
+        <div class="row margin-top-bottom">
+            <div class="offset-3 col-9">
+                <h2>Create your account</h2>
+            </div>
+        </div>
+        <input type="text" id="ActivationCode"
+               name="ActivationCode"
+               hidden="hidden"
+               th:value="${activationCode}"
+               required="required">
+        <div class="row margin-top-bottom">
+            <div class="offset-3 col-6">
+                <label for="FirstName">First name</label>
+                <input type="text" id="FirstName" name="FirstName" class="form-control"
+                       placeholder="First name" th:value="${draftUserDto.FirstName}" required="required">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="offset-3 col-6">
+                <label for="LastName">Last name</label>
+                <input type="text" id="LastName" name="LastName" class="form-control"
+                       placeholder="Last name" th:value="${draftUserDto.LastName}" required="required">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="offset-3 col-6">
+                <label for="Email">E-mail</label>
+                <input type="email" id="Email" name="Email" class="form-control"
+                       placeholder="E-Mail" th:value="${draftUserDto.Email}" required="required">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="offset-3 col-6">
+                <label for="Password">Password</label>
+                <input type="password" id="Password" name="Password" class="form-control"
+                       placeholder="Password" required="required">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="offset-3 col-6">
+                <label for="phoneNumber">Phone number</label>
+                <input type="text" id="phoneNumber" name="phoneNumber" class="form-control"
+                       placeholder="Phone number" required="required">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="offset-3 col-6">
+                <label for="UserCity">City</label>
+                <input type="text" id="UserCity" name="UserCity" class="form-control"
+                       placeholder="City" required="required">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="offset-3 col-6">
+                <label for="UserStreet">Street</label>
+                <input type="text" id="UserStreet" name="UserStreet" class="form-control"
+                       placeholder="Street" required="required">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="offset-3 col-6">
+                <label for="UserStreetNumber">Street number</label>
+                <input type="text" id="UserStreetNumber" name="UserStreetNumber" class="form-control"
+                       placeholder="Street number" required="required">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="offset-3 col-6">
+                <label for="UserCountry">Country</label>
+                <input type="text" id="UserCountry" name="UserCountry" class="form-control"
+                       placeholder="Country" required="required">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="offset-3 col-6">
+                <label for="picture">Picture</label>
+                <input type="file" id="picture" name="picture" class="form-control-file"
+                       accept="image/png, image/jpeg">
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="offset-3 col-6">
+                <div th:text="${param.error}" class="text-danger"></div>
+                <button id="submit"
+                        class="btn btn-lg btn-primary btn-block"
+                        type="submit">Register</button>
+            </div>
+        </div>
+    </div>
+</form>

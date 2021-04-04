@@ -16,8 +16,6 @@ public interface UserRepository extends JpaRepository<User, Long>
 
     @Query("SELECT u " +
            "FROM User u " +
-           "JOIN u.UserInOrganizations uio " +
-           "JOIN uio.Organization o " +
-           "WHERE u.Id = ?2 AND o.Id = ?1")
-    User GetUser(Long organizationId, Long UserId);
+           "WHERE u.Id = ?1")
+    User GetUser(Long UserId);
 }

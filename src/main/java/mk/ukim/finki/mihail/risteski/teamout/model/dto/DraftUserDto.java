@@ -1,10 +1,21 @@
-package mk.ukim.finki.mihail.risteski.teamout.model.request;
+package mk.ukim.finki.mihail.risteski.teamout.model.dto;
 
-public class EmployeeCreateRequest
+public class DraftUserDto
 {
+    private String ActivationCode;
     private String FirstName;
     private String LastName;
     private String Email;
+
+    public String getActivationCode()
+    {
+        return ActivationCode;
+    }
+
+    public void setActivationCode(String activationCode)
+    {
+        ActivationCode = activationCode;
+    }
 
     public String getFirstName()
     {

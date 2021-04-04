@@ -7,23 +7,34 @@
                      th:src="${'/organization/' +  currentUser.getOrganizationId().toString() + '/image/' + currentUser.getLogoId().toString()}">
                 <span th:text="${currentUser.getOrganizationName()}"></span>
                 <a th:href="${'/organization/'+ currentUser.getOrganizationId().toString() +'/employee/invite'}">
-                    <input type="submit" class="btn btn-lg btn-primary" value="Invite employees" text="Invite employees"/>
+                    <input type="submit" class="btn btn-lg btn-primary" value="Invite employees"/>
                 </a>
             </h1>
         </div>
     </div>
-    <div th:each="employee : ${employeeDtos}" class="row margin-top-bottom">
-        <div  class="col-1">
-            <img class="image-icon"
-                 th:if="${currentUser.getLogoId() != null}"
-                 th:src="${'/organization/' +
-                     currentUser.getOrganizationId().toString() +
-                     '/image/' +
-                     currentUser.getLogoId().toString()}">
-        </div>
-        <div class="col-2">
-            <span th:text="${employee.getFirstName()}"></span>
-            <span th:text="${employee.getLastName()}"></span>
+    <div class="row">
+        <div class="col-4" th:each="employee : ${employeeDtos}">
+            <a class="text-link"
+               th:href="${'/organization/' + currentUser.getOrganizationId() + '/employee/' + employee.getId()}">
+                <div class="p-2">
+                    <div class="row margin-top-bottom flex-container box box-shadow-hover padding-1 align-center">
+                        <div class="col-12 flex-container align-center justify-center overflow-hidden">
+                            <img class="image-icon"
+                                 th:if="${employee.getUser().getPictureId() != null}"
+                                 th:src="${'/organization/' +
+                                           currentUser.getOrganizationId().toString() +
+                                           '/image/' +
+                                           employee.getUser().getPictureId().toString()}">
+                        </div>
+                        <div class="col-12 flex-container align-center justify-center overflow-hidden">
+                            <h4 th:text="${employee.getUser().getFirstName() + ' ' + employee.getUser().getLastName()}"></h4>
+                        </div>
+                        <div class="col-12 flex-container align-center justify-center overflow-hidden">
+                            <h5 th:text="${employee.getUser().getEmail()}"></h5>
+                        </div>
+                    </div>
+                </div>
+            </a>
         </div>
     </div>
 </div>

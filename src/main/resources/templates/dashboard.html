@@ -1,39 +1,71 @@
 <div class="container margin-top-bottom"
-     xmlns:th="http://www.thymeleaf.org">
-    <div class="row margin-top-bottom">
-        <div class="col-md-6">
-            <a th:href="${'/organization/' + currentUser.getOrganizationId().toString() + '/profile'}">
-                <div class="flex-container flex-center box box-shadow-hover height-5">
-                    Organization profile
-                </div>
-            </a>
-        </div>
-        <div class="col-md-6">
-            <a th:href="${'/organization/' + currentUser.getOrganizationId().toString() + '/user/'+ currentUser.getUserId().toString() +'/profile'}">
-                <div class="flex-container flex-center box box-shadow-hover height-5">
-                    My profile
-                </div>
-            </a>
-        </div>
-    </div>
-    <div class="row margin-top-bottom">
-        <div class="col-md-6">
-            <a th:href="${'/organization/'+ currentUser.getOrganizationId().toString() + '/employee/list'}">
-                <div class="flex-container flex-center box box-shadow-hover height-5">
-                    Employees
-                </div>
-            </a>
-        </div>
-        <div class="col-md-6">
-            <div class="flex-container flex-center box box-shadow-hover height-5">
-                Reports
+     xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div class="row">
+        <div class="col-md-6"
+             sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+            <div class="pt-3 pb-3">
+                <a th:href="${'/organization/' + currentUser.getOrganizationId().toString() + '/profile'}">
+                    <div class="flex-container justify-center align-center box box-shadow-hover height-5">
+                        Organization profile
+                    </div>
+                </a>
             </div>
         </div>
-    </div>
-    <div class="row margin-top-bottom">
-        <div class="col-12">
-            <div class="flex-container flex-center box box-shadow-hover height-5">
-                Statistics
+        <div class="col-md-6"
+             sec:authorize="isAuthenticated()">
+            <div class="pt-3 pb-3">
+                <a th:href="${'/user/'+ currentUser.getUserId().toString() +'/profile'}">
+                    <div class="flex-container justify-center align-center box box-shadow-hover height-5">
+                        Profile
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6"
+             sec:authorize="hasRole('ROLE_EMPLOYEE')">
+            <div class="pt-3 pb-3">
+                <a th:href="${'/user/'+ currentUser.getUserId().toString() +'/absence'}">
+                    <div class="flex-container justify-center align-center box box-shadow-hover height-5">
+                        Absences
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-12"
+             sec:authorize="hasRole('ROLE_EMPLOYEE')">
+            <div class="pt-3 pb-3">
+                <a th:href="${'/user/'+ currentUser.getUserId().toString() +'/approval'}">
+                    <div class="flex-container justify-center align-center box box-shadow-hover height-5">
+                        Approval
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6"
+             sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+            <div class="pt-3 pb-3">
+                <a th:href="${'/organization/'+ currentUser.getOrganizationId().toString() + '/employee/list'}">
+                    <div class="flex-container justify-center align-center box box-shadow-hover height-5">
+                        Employees
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-6"
+             sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+            <div class="pt-3 pb-3">
+                <div class="flex-container justify-center align-center box box-shadow-hover height-5">
+                    Reports
+                </div>
+            </div>
+        </div>
+        <div class="col-12"
+             sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+            <div class="pt-3 pb-3">
+                <div class="flex-container justify-center align-center box box-shadow-hover height-5">
+                    Statistics
+                </div>
             </div>
         </div>
     </div>

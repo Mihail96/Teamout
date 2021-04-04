@@ -11,10 +11,22 @@
                                 Organization
                             </a>
                         </li>
-                        <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                        <li sec:authorize="isAuthenticated()">
                             <a class="navbar-link"
-                               th:href="${'/organization/'+ currentUser.getOrganizationId().toString() + '/user/'+ currentUser.getUserId().toString() +'/profile'}">
+                               th:href="${'/user/'+ currentUser.getUserId().toString() +'/profile'}">
                                 My profile
+                            </a>
+                        </li>
+                        <li sec:authorize="hasRole('ROLE_EMPLOYEE')">
+                            <a class="navbar-link"
+                               th:href="${'/user/'+ currentUser.getUserId().toString() +'/profile'}">
+                                Absences
+                            </a>
+                        </li>
+                        <li sec:authorize="hasRole('ROLE_EMPLOYEE')">
+                            <a class="navbar-link"
+                               th:href="${'/user/'+ currentUser.getUserId().toString() +'/profile'}">
+                                Approval
                             </a>
                         </li>
                         <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">

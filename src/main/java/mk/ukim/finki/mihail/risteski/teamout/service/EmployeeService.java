@@ -1,11 +1,12 @@
 package mk.ukim.finki.mihail.risteski.teamout.service;
 
 import mk.ukim.finki.mihail.risteski.teamout.model.dto.EmployeeDto;
-import mk.ukim.finki.mihail.risteski.teamout.model.entity.DraftEmployee;
+import mk.ukim.finki.mihail.risteski.teamout.model.entity.DraftUser;
 import mk.ukim.finki.mihail.risteski.teamout.model.entity.Employee;
 import mk.ukim.finki.mihail.risteski.teamout.model.entity.Organization;
-import mk.ukim.finki.mihail.risteski.teamout.model.request.EmployeeCreateRequest;
-import mk.ukim.finki.mihail.risteski.teamout.repository.DraftEmployeeRepository;
+import mk.ukim.finki.mihail.risteski.teamout.model.enumeration.RoleEnum;
+import mk.ukim.finki.mihail.risteski.teamout.model.request.DraftUserCreateRequest;
+import mk.ukim.finki.mihail.risteski.teamout.repository.DraftUserRepository;
 import mk.ukim.finki.mihail.risteski.teamout.repository.EmployeeRepository;
 import mk.ukim.finki.mihail.risteski.teamout.repository.OrganizationRepository;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IEmailService;
@@ -13,26 +14,26 @@ import mk.ukim.finki.mihail.risteski.teamout.service.contract.IEmployeeService;
 import mk.ukim.finki.mihail.risteski.teamout.util.EmployeeUtils;
 import org.springframework.stereotype.Service;
 
-import java.nio.charset.StandardCharsets;
+import java.security.SecureRandom;
 import java.util.ArrayList;
+import java.util.Base64;
 import java.util.List;
-import java.util.Random;
 
 @Service
 public class EmployeeService implements IEmployeeService
 {
     private final EmployeeRepository _employeeRepository;
-    private final DraftEmployeeRepository _draftEmployeeRepository;
+    private final DraftUserRepository _draftUserRepository;
     private final OrganizationRepository _organizationRepository;
     private final IEmailService _emailService;
 
     public EmployeeService(EmployeeRepository employeeRepository,
-                           DraftEmployeeRepository draftEmployeeRepository,
+                           DraftUserRepository draftUserRepository,
                            OrganizationRepository organizationRepository,
                            IEmailService emailService)
     {
         _employeeRepository = employeeRepository;
-        _draftEmployeeRepository = draftEmployeeRepository;
+        _draftUserRepository = draftUserRepository;
         _organizationRepository = organizationRepository;
         _emailService = emailService;
     }
@@ -44,18 +45,26 @@ public class EmployeeService implements IEmployeeService
     }
 
     @Override
-    public List<EmployeeDto> InviteEmployee(Long organizationId, EmployeeCreateRequest employeeCreateRequest)
+    public List<EmployeeDto> InviteEmployee(Long organizationId, DraftUserCreateRequest draftUserCreateRequest)
     {
-        byte[] array = new byte[16];
-        new Random().nextBytes(array);
-        String generatedString = new String(array, StandardCharsets.UTF_8);
-
-        DraftEmployee draftEmployee = new DraftEmployee();
-        draftEmployee.setActivationCode(generatedString);
-
-        _draftEmployeeRepository.saveAndFlush(draftEmployee);
+        SecureRandom random = new SecureRandom();
+        byte bytes[] = new byte[16];
+        random.nextBytes(bytes);
+        Base64.Encoder encoder = Base64.getUrlEncoder().withoutPadding();
+        String generatedString = encoder.encodeToString(bytes);
 
         Organization organization = _organizationRepository.GetOrganizationById(organizationId);
+
+        DraftUser draftUser = new DraftUser();
+        draftUser.setActivationCode(generatedString);
+        draftUser.setEmail(draftUserCreateRequest.getEmail());
+        draftUser.setFirstName(draftUserCreateRequest.getFirstName());
+        draftUser.setLastName(draftUserCreateRequest.getLastName());
+        draftUser.setOrganization(organization);
+        draftUser.setRole(RoleEnum.ToRole(RoleEnum.Employee));
+
+        _draftUserRepository.saveAndFlush(draftUser);
+
         String subject = "Invitation to make your account in Teamout";
 
         String text = "Hello, your organization " +
@@ -64,12 +73,12 @@ public class EmployeeService implements IEmployeeService
                 "You can follow this link to create your user: " +
                 "http://localhost:5555" +
                 "/register" +
-                "/employee/" +
+                "/user/" +
                 generatedString +
                 " \n" +
                 " \n" +
                 "Teamout";
-        _emailService.SendSimpleMessage(employeeCreateRequest.getEmail(), subject, text);
+        _emailService.SendSimpleMessage(draftUserCreateRequest.getEmail(), subject, text);
 
         return getEmployeeDtos(organizationId);
     }

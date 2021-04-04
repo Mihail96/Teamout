@@ -11,6 +11,21 @@
     justify-content: flex-end;
 }
 
+.overflow-hidden {
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.text-link {
+    color: rgba(0, 0, 0, 1);
+}
+
+.text-link:hover, .text-link:focus {
+    text-decoration: none;
+    color: rgba(0, 0, 0, 1);
+}
+
 .navbar-main {
     display: inline-block;
     padding-top: 10px;
@@ -87,8 +102,14 @@
 {
 }
 
-.flex-container.flex-center{
+.padding-1{
+    padding: 20px;
+}
+
+.flex-container.justify-center{
     justify-content: center;
+}
+.flex-container.align-center{
     align-items: center;
 }
 

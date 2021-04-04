@@ -1,7 +1,7 @@
 package mk.ukim.finki.mihail.risteski.teamout.web.controller;
 
 import mk.ukim.finki.mihail.risteski.teamout.model.dto.EmployeeDto;
-import mk.ukim.finki.mihail.risteski.teamout.model.request.EmployeeCreateRequest;
+import mk.ukim.finki.mihail.risteski.teamout.model.request.DraftUserCreateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IEmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -50,10 +50,10 @@ public class EmployeeController
 
     @PostMapping(value = "/invite")
     public String InviteEmployee(@PathVariable(value="organizationId") Long organizationId,
-                                 EmployeeCreateRequest employeeCreateRequest,
+                                 DraftUserCreateRequest draftUserCreateRequest,
                                  Model model)
     {
-        List<EmployeeDto> employeeDtos = _employeeService.InviteEmployee(organizationId, employeeCreateRequest);
+        List<EmployeeDto> employeeDtos = _employeeService.InviteEmployee(organizationId, draftUserCreateRequest);
 
         model.addAttribute("employeeDtos", employeeDtos);
         model.addAttribute("bodyContent", "list-employee");

@@ -42,9 +42,13 @@ public class OrganizationService implements IOrganizationService
     }
 
     @Override
-    public void CreateOrganization(OrganizationCreateRequest request, MultipartFile logoFile, MultipartFile userImageFile)
+    public void CreateOrganization(OrganizationCreateRequest request,
+                                   MultipartFile logoFile,
+                                   MultipartFile userImageFile)
     {
-        if(logoFile != null && logoFile.getOriginalFilename() != null)
+        if(logoFile != null &&
+           logoFile.getOriginalFilename() != null &&
+          !logoFile.getOriginalFilename().equals(""))
         {
             request.setLogoName(StringUtils.cleanPath(logoFile.getOriginalFilename()));
             try
@@ -57,7 +61,9 @@ public class OrganizationService implements IOrganizationService
             }
         }
 
-        if(userImageFile != null && userImageFile.getOriginalFilename() != null)
+        if(userImageFile != null &&
+           userImageFile.getOriginalFilename() != null &&
+          !userImageFile.getOriginalFilename().equals(""))
         {
             request.setPictureName(StringUtils.cleanPath(userImageFile.getOriginalFilename()));
             try
@@ -139,7 +145,9 @@ public class OrganizationService implements IOrganizationService
                                               OrganizationUpdateRequest request,
                                               MultipartFile logoFile) throws NotFoundException
     {
-        if(logoFile != null && logoFile.getOriginalFilename() != null)
+        if(logoFile != null &&
+           logoFile.getOriginalFilename() != null &&
+           !logoFile.getOriginalFilename().equals(""))
         {
             request.setLogoName(StringUtils.cleanPath(logoFile.getOriginalFilename()));
             try

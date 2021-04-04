@@ -1,17 +1,18 @@
 package mk.ukim.finki.mihail.risteski.teamout.service;
 
+import javassist.NotFoundException;
+import mk.ukim.finki.mihail.risteski.teamout.model.dto.DraftUserDto;
 import mk.ukim.finki.mihail.risteski.teamout.model.dto.UserDto;
-import mk.ukim.finki.mihail.risteski.teamout.model.entity.Address;
-import mk.ukim.finki.mihail.risteski.teamout.model.entity.Image;
-import mk.ukim.finki.mihail.risteski.teamout.model.entity.User;
+import mk.ukim.finki.mihail.risteski.teamout.model.entity.*;
+import mk.ukim.finki.mihail.risteski.teamout.model.enumeration.RoleEnum;
+import mk.ukim.finki.mihail.risteski.teamout.model.request.DraftUserCreateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.model.request.UserUpdateRequest;
-import mk.ukim.finki.mihail.risteski.teamout.repository.AddressRepository;
-import mk.ukim.finki.mihail.risteski.teamout.repository.ImageRepository;
-import mk.ukim.finki.mihail.risteski.teamout.repository.UserRepository;
+import mk.ukim.finki.mihail.risteski.teamout.repository.*;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IUserService;
 import mk.ukim.finki.mihail.risteski.teamout.util.UserUtils;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
@@ -22,16 +23,28 @@ import java.util.Optional;
 @Service
 public class UserService implements IUserService
 {
+    private final PasswordEncoder _passwordEncoder;
     private final UserRepository _userRepository;
+    private final DraftUserRepository _draftUserRepository;
+    private final UserInOrganizationRepository _userInOrganizationRepository;
     private final AddressRepository _addressRepository;
+    private final EmployeeRepository _employeeRepository;
     private final ImageRepository _imageRepository;
 
-    public UserService(UserRepository userRepository,
+    public UserService(PasswordEncoder passwordEncoder,
+                       UserRepository userRepository,
+                       DraftUserRepository draftUserRepository,
+                       UserInOrganizationRepository userInOrganizationRepository,
                        AddressRepository addressRepository,
+                       EmployeeRepository employeeRepository,
                        ImageRepository imageRepository)
     {
+        _passwordEncoder = passwordEncoder;
         _userRepository = userRepository;
+        _draftUserRepository = draftUserRepository;
+        _userInOrganizationRepository = userInOrganizationRepository;
         _addressRepository = addressRepository;
+        _employeeRepository = employeeRepository;
         _imageRepository = imageRepository;
     }
 
@@ -42,15 +55,18 @@ public class UserService implements IUserService
     }
 
     @Override
-    public UserDto GetUserProfile(Long organizationId, Long userId)
+    public UserDto GetUserProfile(Long userId)
     {
-        return UserUtils.CreateUserDto(_userRepository.GetUser(organizationId, userId));
+        return UserUtils.CreateUserDto(_userRepository.GetUser(userId));
     }
 
     @Override
-    public UserDto UpdateUser(Long organizationId, Long userId, UserUpdateRequest request, MultipartFile pictureFile)
+    public void CreateUser(DraftUserCreateRequest request, MultipartFile pictureFile)
     {
-        if(pictureFile != null && pictureFile.getOriginalFilename() != null)
+        DraftUser draftUser = _draftUserRepository.GetDraftUserByActivationCode(request.getActivationCode());
+        if(pictureFile != null &&
+           pictureFile.getOriginalFilename() != null &&
+           !pictureFile.getOriginalFilename().equals(""))
         {
             request.setPictureName(StringUtils.cleanPath(pictureFile.getOriginalFilename()));
             try
@@ -63,7 +79,66 @@ public class UserService implements IUserService
             }
         }
 
-        User user = _userRepository.GetUser(organizationId, userId);
+        User user = new User();
+        user.setFirstName(request.getFirstName());
+        user.setLastName(request.getLastName());
+        user.setEmail(request.getEmail());
+        user.setPasswordHash(_passwordEncoder.encode(request.getPassword()));
+        user.setPhoneNumber(request.getPhoneNumber());
+
+        Address userAddress = new Address();
+        userAddress.setCity(request.getUserCity());
+        userAddress.setStreet(request.getUserStreet());
+        userAddress.setNumber(request.getUserStreetNumber());
+        userAddress.setCountry(request.getUserCountry());
+
+        user.setAddress(userAddress);
+
+        if(request.getPictureName() != null && request.getPictureName() != null)
+        {
+            Image picture = new Image();
+            picture.setName(request.getPictureName());
+            picture.setContent(request.getPictureContent());
+            user.setPicture(picture);
+            _imageRepository.save(picture);
+        }
+
+        UserInOrganization userInOrganization = new UserInOrganization();
+        userInOrganization.setUser(user);
+        userInOrganization.setOrganization(draftUser.getOrganization());
+        userInOrganization.setRole(draftUser.getRole());
+        if(draftUser.getRole().getName().equals(RoleEnum.Employee.getName()))
+        {
+            Employee employee = new Employee();
+            userInOrganization.setEmployee(employee);
+            _employeeRepository.save(employee);
+        }
+
+        _draftUserRepository.delete(draftUser);
+        _addressRepository.save(userAddress);
+        _userRepository.save(user);
+        _userInOrganizationRepository.saveAndFlush(userInOrganization);
+    }
+
+    @Override
+    public UserDto UpdateUser(Long userId, UserUpdateRequest request, MultipartFile pictureFile)
+    {
+        if(pictureFile != null &&
+           pictureFile.getOriginalFilename() != null &&
+          !pictureFile.getOriginalFilename().equals(""))
+        {
+            request.setPictureName(StringUtils.cleanPath(pictureFile.getOriginalFilename()));
+            try
+            {
+                request.setPictureContent(pictureFile.getBytes());
+            }
+            catch (IOException e)
+            {
+                e.printStackTrace();
+            }
+        }
+
+        User user = _userRepository.GetUser(userId);
 
         user.setFirstName(request.getFirstName());
         user.setLastName(request.getLastName());
@@ -77,7 +152,7 @@ public class UserService implements IUserService
         address.setCountry(request.getUserCountry());
         _addressRepository.save(address);
 
-        if(request.getPictureName() != null && request.getPictureName() != null)
+        if(request.getPictureName() != null && !request.getPictureName().equals(""))
         {
             Image image = user.getPicture();
             if(image == null)
@@ -92,5 +167,23 @@ public class UserService implements IUserService
         _userRepository.saveAndFlush(user);
 
         return UserUtils.CreateUserDto(user);
+    }
+
+    @Override
+    public DraftUserDto GetDraftUser(String activationCode) throws NotFoundException
+    {
+        DraftUser draftUser = _draftUserRepository.GetDraftUserByActivationCode(activationCode);
+        if(draftUser == null)
+        {
+            throw new NotFoundException("Couldnt find the drafted user");
+        }
+
+        DraftUserDto draftUserDto = new DraftUserDto();
+        draftUserDto.setActivationCode(activationCode);
+        draftUserDto.setEmail(draftUser.getEmail());
+        draftUserDto.setFirstName(draftUser.getFirstName());
+        draftUserDto.setLastName(draftUser.getLastName());
+
+        return draftUserDto;
     }
 }

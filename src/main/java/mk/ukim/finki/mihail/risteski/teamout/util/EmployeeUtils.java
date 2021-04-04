@@ -12,6 +12,7 @@ public class EmployeeUtils
         User user = employee.getUserInOrganization().getUser();
 
         employeeDto.setUser(UserUtils.CreateUserDto(user));
+        employeeDto.setId(employee.getId());
 
         return employeeDto;
     }

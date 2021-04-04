@@ -1,5 +1,7 @@
 package mk.ukim.finki.mihail.risteski.teamout.model.enumeration;
 
+import javassist.NotFoundException;
+
 import java.lang.reflect.Field;
 import java.lang.reflect.Modifier;
 import java.util.ArrayList;
@@ -53,7 +55,7 @@ public class Enumeration
         return fieldValues;
     }
 
-    public static <T extends Enumeration> Optional<T> GetById(T e, Long id)
+    public static <T extends Enumeration> T GetById(T e, Long id) throws NotFoundException
     {
         List<T> enumerations = All(e);
 
@@ -61,11 +63,11 @@ public class Enumeration
         {
             if(enumeration.getId().equals(id))
             {
-                return Optional.of(enumeration);
+                return enumeration;
             }
         }
 
-        return Optional.empty();
+        throw new NotFoundException("Couldn't find the desired role");
     }
 
     public static <T extends Enumeration> Optional<T> GetByName(T e, String name)

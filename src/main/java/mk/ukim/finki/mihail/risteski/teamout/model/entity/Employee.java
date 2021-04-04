@@ -13,7 +13,7 @@ public class Employee
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
 
-    @OneToOne
+    @OneToOne(mappedBy = "Employee")
     private UserInOrganization UserInOrganization;
 
     @ManyToMany
@@ -22,7 +22,7 @@ public class Employee
     @ManyToMany(mappedBy = "ResponsibleFor")
     private List<Employee> ResponsibleTo;
 
-    @OneToMany
+    @OneToMany(mappedBy = "Employee")
     private List<Absence> Absences;
 
     public Long getId()
