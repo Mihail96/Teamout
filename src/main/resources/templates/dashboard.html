@@ -12,6 +12,12 @@
                 </a>
             </div>
         </div>
+        <div class="col-md-12"
+             sec:authorize="hasRole('ROLE_EMPLOYEE')">
+            <div class="pt-3 pb-3">
+                <section th:replace="fragments/absence-display"></section>
+            </div>
+        </div>
         <div class="col-md-6"
              sec:authorize="isAuthenticated()">
             <div class="pt-3 pb-3">
@@ -25,7 +31,11 @@
         <div class="col-md-6"
              sec:authorize="hasRole('ROLE_EMPLOYEE')">
             <div class="pt-3 pb-3">
-                <a th:href="${'/user/'+ currentUser.getUserId().toString() +'/absence'}">
+                <a th:href="${'/organization/' +
+                              currentUser.getOrganizationId().toString() +
+                              '/employee/' +
+                              currentUser.getEmployeeUser().getId().toString() +
+                              '/absences'}">
                     <div class="flex-container justify-center align-center box box-shadow-hover height-5">
                         Absences
                     </div>
@@ -35,7 +45,11 @@
         <div class="col-md-12"
              sec:authorize="hasRole('ROLE_EMPLOYEE')">
             <div class="pt-3 pb-3">
-                <a th:href="${'/user/'+ currentUser.getUserId().toString() +'/approval'}">
+                <a th:href="${'/organization/' +
+                              currentUser.getOrganizationId().toString() +
+                              '/employee/' +
+                              currentUser.getEmployeeUser().getId().toString() +
+                              '/absences/approval'}">
                     <div class="flex-container justify-center align-center box box-shadow-hover height-5">
                         Approval
                     </div>

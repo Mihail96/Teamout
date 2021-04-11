@@ -36,6 +36,10 @@
     color: rgba(255, 255, 255, 1);
 }
 
+.left-border {
+
+}
+
 .navbar-main:hover, .navbar-main:focus {
     text-decoration: none;
     color: rgba(255, 255, 255, 1);
@@ -131,4 +135,41 @@
     height: 50px;
     width: 50px;
     border-radius: 50%;
+}
+
+.text-green {
+    color: green;
+}
+
+.text-yellow {
+    color: #fcc203;
+}
+
+.text-red {
+    color: red;
+}
+
+.green {
+    background-color: green;
+}
+
+.yellow {
+    background-color: #fcc203;
+}
+
+.red {
+    background-color: red;
+}
+
+.lightgray {
+    background-color: lightgray;
+}
+
+.absence-label {
+    width: 33.3%;
+}
+
+.absence-bar {
+    padding-right: 15px;
+    padding-left: 15px;
 }

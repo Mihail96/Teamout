@@ -1,0 +1,88 @@
+<div class="container margin-top-bottom" xmlns:th="http://www.thymeleaf.org">
+    <div class="row margin-top-bottom">
+        <div class="col-12">
+            <h1>
+                <img class="image-icon"
+                     th:if="${currentUser.getLogoId() != null}"
+                     th:src="${'/organization/' +
+                               currentUser.getOrganizationId().toString() +
+                               '/image/' +
+                               currentUser.getLogoId().toString()}">
+
+                <span th:text="${currentUser.getOrganizationName()}"></span>
+            </h1>
+        </div>
+    </div>
+    <div class="row box">
+        <div class="col-2 overflow-hidden flex-container align-center">
+            Type
+        </div>
+        <div class="col-2 overflow-hidden flex-container align-center">
+            Status
+        </div>
+        <div class="col-2 overflow-hidden flex-container align-center">
+            Date from
+        </div>
+        <div class="col-2 overflow-hidden flex-container align-center">
+            Date to
+        </div>
+        <div class="col-2 overflow-hidden flex-container align-center">
+            Employee name
+        </div>
+        <div class="col-2 overflow-hidden flex-container align-center">
+            Actions
+        </div>
+    </div>
+    <div class="row margin-top-bottom box box-shadow padding-1 flex-container align-center"
+         th:each="absenceDto : ${absenceDtos}">
+        <div class="col-2 overflow-hidden flex-container align-center">
+            <span th:text="${absenceDto.getAbsenceType()}"></span>
+        </div>
+        <div class="col-2 overflow-hidden flex-container align-center">
+            <span th:if="${absenceDto.getAbsenceStatus().equals('PENDING')}"
+                  class="text-yellow"
+                  th:text="${absenceDto.getAbsenceStatus()}"></span>
+            <span th:if="${absenceDto.getAbsenceStatus().equals('APPROVED')}"
+                  class="text-green"
+                  th:text="${absenceDto.getAbsenceStatus()}"></span>
+            <span th:if="${absenceDto.getAbsenceStatus().equals('REJECTED')}"
+                  class="text-red"
+                  th:text="${absenceDto.getAbsenceStatus()}"></span>
+        </div>
+        <div class="col-2 overflow-hidden flex-container align-center">
+            <span th:text="${absenceDto.getDateFrom()}"></span>
+        </div>
+        <div class="col-2 overflow-hidden flex-container align-center">
+            <span th:text="${absenceDto.getDateTo()}"></span>
+        </div>
+        <div class="col-2 overflow-hidden flex-container align-center">
+            <span th:text="${absenceDto.getEmployeeFirstName() + ' ' + absenceDto.getEmployeeLastName()}"></span>
+        </div>
+        <div class="col-1 overflow-hidden flex-container align-center">
+            <form th:action="${'/organization/' +
+                               currentUser.getOrganizationId().toString() +
+                               '/employee/' +
+                               currentUser.getEmployeeUser().getId() +
+                               '/absence/' +
+                               absenceDto.getId() +
+                               '/approve'}"
+                  th:if="${absenceDto.getAbsenceStatus().equals('PENDING')}"
+                  method="post">
+                <input type="submit" class="btn btn-link" value="Approve">
+            </form>
+        </div>
+        <div class="col-1 overflow-hidden flex-container align-center">
+            <form th:action="${'/organization/' +
+                               currentUser.getOrganizationId().toString() +
+                               '/employee/' +
+                               currentUser.getEmployeeUser().getId() +
+                               '/absence/' +
+                               absenceDto.getId() +
+                               '/reject'}"
+                  th:if="${absenceDto.getAbsenceStatus().equals('PENDING')}"
+                  method="post">
+                <input type="submit" class="btn btn-link" value="Reject">
+            </form>
+        </div>
+    </div>
+</div>

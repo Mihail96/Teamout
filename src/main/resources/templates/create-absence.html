@@ -1,0 +1,82 @@
+<form xmlns:th="http://www.thymeleaf.org"
+      th:action="${'/organization/' +
+                   currentUser.getOrganizationId().toString() +
+                   '/employee/' +
+                   currentUser.getEmployeeUser().getId() +
+                   '/absence/create'}"
+      method="post">
+    <div class="container margin-top-bottom">
+        <div class="row">
+            <div class="col-12">
+                <h1>
+                    <img class="image-icon"
+                         th:if="${currentUser.getLogoId() != null}"
+                         th:src="${'/organization/' +  currentUser.getOrganizationId().toString() + '/image/' + currentUser.getLogoId().toString()}">
+
+                    <span th:text="${currentUser.getOrganizationName()}"></span>
+
+                    <button id="submit"
+                            class="btn btn-lg btn-primary"
+                            type="submit">Save</button>
+                </h1>
+            </div>
+        </div>
+        <div class="row margin-top-bottom">
+            <div class="col-12">
+                <div class="box box-shadow margin-top-bottom">
+                    <div class="box-header">
+                        Create Absence
+                    </div>
+                    <div class="box-body">
+                        <div class="container">
+                            <div class="row margin-top-bottom">
+                                <div class="col-4">
+                                    <label for="AbsenceType">Type</label>
+                                </div>
+                                <div class="col-8">
+                                    <select id="AbsenceType"
+                                            name="AbsenceType"
+                                            class="form-control">
+                                        <option th:selected="selected"
+                                                th:value="HOLIDAY"
+                                                th:text="Holiday"></option>
+                                        <option th:value="SICKLEAVE"
+                                                th:text="Sickleave"></option>
+                                        <option th:value="EXTRAORDINARY"
+                                                th:text="Extraordinary"></option>
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="row margin-top-bottom">
+                                <div class="col-4">
+                                    <label for="DateFrom">Date from</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="date"
+                                           id="DateFrom"
+                                           name="DateFrom"
+                                           class="form-control"
+                                           placeholder="Date from">
+                                </div>
+                            </div>
+
+                            <div class="row margin-top-bottom">
+                                <div class="col-4">
+                                    <label for="DateTo">Date to</label>
+                                </div>
+                                <div class="col-8">
+                                    <input type="date"
+                                           id="DateTo"
+                                           name="DateTo"
+                                           class="form-control"
+                                           placeholder="Date to">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</form>

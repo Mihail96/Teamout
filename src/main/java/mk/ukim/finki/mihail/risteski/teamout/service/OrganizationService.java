@@ -106,7 +106,7 @@ public class OrganizationService implements IOrganizationService
 
         user.setAddress(userAddress);
 
-        if(!request.getLogoName().equals("") && request.getLogoContent().length != 0)
+        if(request.getLogoName() != null)
         {
             Image logo = new Image();
             logo.setName(request.getLogoName());
@@ -115,7 +115,7 @@ public class OrganizationService implements IOrganizationService
             _imageRepository.save(logo);
         }
 
-        if(!request.getPictureName().equals("") && request.getPictureContent().length != 0)
+        if(request.getPictureName() != null)
         {
             Image picture = new Image();
             picture.setName(request.getPictureName());

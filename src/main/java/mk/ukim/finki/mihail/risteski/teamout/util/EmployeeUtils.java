@@ -1,8 +1,12 @@
 package mk.ukim.finki.mihail.risteski.teamout.util;
 
+import mk.ukim.finki.mihail.risteski.teamout.model.dto.EmployeeDetailsDto;
 import mk.ukim.finki.mihail.risteski.teamout.model.dto.EmployeeDto;
 import mk.ukim.finki.mihail.risteski.teamout.model.entity.Employee;
 import mk.ukim.finki.mihail.risteski.teamout.model.entity.User;
+
+import java.util.ArrayList;
+import java.util.List;
 
 public class EmployeeUtils
 {

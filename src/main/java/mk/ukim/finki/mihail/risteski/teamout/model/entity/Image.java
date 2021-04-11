@@ -5,7 +5,6 @@ import org.hibernate.annotations.Type;
 
 import javax.persistence.*;
 
-@Data
 @Entity
 public class Image
 {

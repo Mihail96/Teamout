@@ -1,5 +1,7 @@
 package mk.ukim.finki.mihail.risteski.teamout.model.enumeration;
 
+import mk.ukim.finki.mihail.risteski.teamout.model.entity.AbsenceStatus;
+
 import java.util.List;
 
 public class AbsenceStatusEnum extends Enumeration
@@ -16,5 +18,14 @@ public class AbsenceStatusEnum extends Enumeration
     public static List<AbsenceStatusEnum> GetAll()
     {
         return All(None);
+    }
+
+    public AbsenceStatus ToAbsenceStatus()
+    {
+        AbsenceStatus absenceStatus = new AbsenceStatus();
+        absenceStatus.setId(this.getId());
+        absenceStatus.setName(this.getName());
+
+        return absenceStatus;
     }
 }

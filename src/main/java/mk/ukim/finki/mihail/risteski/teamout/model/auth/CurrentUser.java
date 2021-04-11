@@ -1,5 +1,7 @@
 package mk.ukim.finki.mihail.risteski.teamout.model.auth;
 
+import mk.ukim.finki.mihail.risteski.teamout.model.dto.EmployeeDto;
+
 import java.util.Set;
 
 public class CurrentUser
@@ -19,6 +21,8 @@ public class CurrentUser
     private String LastName;
 
     private String Email;
+
+    private EmployeeUser EmployeeUser;
 
     public Long getOrganizationId()
     {
@@ -98,5 +102,15 @@ public class CurrentUser
     public void setOrganizationName(String organizationName)
     {
         OrganizationName = organizationName;
+    }
+
+    public EmployeeUser getEmployeeUser()
+    {
+        return EmployeeUser;
+    }
+
+    public void setEmployeeUser(EmployeeUser employeeUser)
+    {
+        this.EmployeeUser = employeeUser;
     }
 }

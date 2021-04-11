@@ -5,13 +5,30 @@ import lombok.Data;
 import javax.persistence.*;
 import java.util.List;
 
-@Data
 @Entity
 public class Employee
 {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long Id;
+
+    @Column(columnDefinition = "int4 not null default 0")
+    private int HolidayDaysUsed;
+
+    @Column(columnDefinition = "int4 not null default 0")
+    private int HolidayDaysBalance;
+
+    @Column(columnDefinition = "int4 not null default 0")
+    private int SickleaveDaysUsed;
+
+    @Column(columnDefinition = "int4 not null default 0")
+    private int SickleaveDaysBalance;
+
+    @Column(columnDefinition = "int4 not null default 0")
+    private int ExtraordinaryDaysUsed;
+
+    @Column(columnDefinition = "int4 not null default 0")
+    private int ExtraordinaryDaysBalance;
 
     @OneToOne(mappedBy = "Employee")
     private UserInOrganization UserInOrganization;
@@ -73,5 +90,65 @@ public class Employee
     public void setAbsences(List<Absence> absences)
     {
         Absences = absences;
+    }
+
+    public int getHolidayDaysUsed()
+    {
+        return HolidayDaysUsed;
+    }
+
+    public void setHolidayDaysUsed(int holidayDaysUsed)
+    {
+        HolidayDaysUsed = holidayDaysUsed;
+    }
+
+    public int getHolidayDaysBalance()
+    {
+        return HolidayDaysBalance;
+    }
+
+    public void setHolidayDaysBalance(int holidayDaysBalance)
+    {
+        HolidayDaysBalance = holidayDaysBalance;
+    }
+
+    public int getSickleaveDaysUsed()
+    {
+        return SickleaveDaysUsed;
+    }
+
+    public void setSickleaveDaysUsed(int sickleaveDaysUsed)
+    {
+        SickleaveDaysUsed = sickleaveDaysUsed;
+    }
+
+    public int getSickleaveDaysBalance()
+    {
+        return SickleaveDaysBalance;
+    }
+
+    public void setSickleaveDaysBalance(int sickleaveDaysBalance)
+    {
+        SickleaveDaysBalance = sickleaveDaysBalance;
+    }
+
+    public int getExtraordinaryDaysUsed()
+    {
+        return ExtraordinaryDaysUsed;
+    }
+
+    public void setExtraordinaryDaysUsed(int extraordinaryDaysUsed)
+    {
+        ExtraordinaryDaysUsed = extraordinaryDaysUsed;
+    }
+
+    public int getExtraordinaryDaysBalance()
+    {
+        return ExtraordinaryDaysBalance;
+    }
+
+    public void setExtraordinaryDaysBalance(int extraordinaryDaysBalance)
+    {
+        ExtraordinaryDaysBalance = extraordinaryDaysBalance;
     }
 }

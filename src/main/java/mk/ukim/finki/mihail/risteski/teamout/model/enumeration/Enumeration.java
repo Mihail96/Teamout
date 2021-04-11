@@ -67,10 +67,10 @@ public class Enumeration
             }
         }
 
-        throw new NotFoundException("Couldn't find the desired role");
+        throw new NotFoundException("Couldn't find the desired entity");
     }
 
-    public static <T extends Enumeration> Optional<T> GetByName(T e, String name)
+    public static <T extends Enumeration> T GetByName(T e, String name) throws NotFoundException
     {
         List<T> enumerations = All(e);
 
@@ -78,10 +78,10 @@ public class Enumeration
         {
             if(enumeration.getName().equals(name))
             {
-                return Optional.of(enumeration);
+                return enumeration;
             }
         }
 
-        return Optional.empty();
+        throw new NotFoundException("Couldn't find the desired entity");
     }
 }

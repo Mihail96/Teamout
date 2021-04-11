@@ -15,6 +15,7 @@
                     <span th:text="${param.error}" class="text-danger"></span>
                     <button id="submit"
                             class="btn btn-lg btn-primary" type="submit">Invite</button>
+                    <div th:text="${param.error}" class="text-danger"></div>
                 </h1>
             </div>
         </div>
@@ -39,7 +40,5 @@
                        placeholder="Email" required="required">
             </div>
         </div>
-        <div th:text="${param.error}" class="text-danger"></div>
-        <button class="btn btn-lg btn-primary" type="submit">Invite</button>
     </div>
 </form>

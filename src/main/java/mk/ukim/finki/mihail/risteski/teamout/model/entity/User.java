@@ -1,5 +1,6 @@
 package mk.ukim.finki.mihail.risteski.teamout.model.entity;
 
+import javassist.NotFoundException;
 import lombok.Data;
 import mk.ukim.finki.mihail.risteski.teamout.model.enumeration.RoleEnum;
 import org.springframework.security.core.GrantedAuthority;
@@ -11,7 +12,6 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-@Data
 @Entity
 public class User implements UserDetails
 {
@@ -46,11 +46,18 @@ public class User implements UserDetails
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities()
     {
-        return UserInOrganizations.stream().map(x ->
-        {
-            Optional<RoleEnum> roleEnumOptional = RoleEnum.GetByName(RoleEnum.None, x.getRole().getName());
-            return roleEnumOptional.orElse(RoleEnum.None);
-        }).collect(Collectors.toList());
+        return UserInOrganizations.stream()
+                .map(x ->
+                {
+                    try
+                    {
+                        return RoleEnum.GetByName(RoleEnum.None, x.getRole().getName());
+                    }
+                    catch (NotFoundException e)
+                    {
+                        return RoleEnum.None;
+                    }
+                }).collect(Collectors.toList());
     }
 
     @Override

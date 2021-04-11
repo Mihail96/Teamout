@@ -8,7 +8,6 @@ import mk.ukim.finki.mihail.risteski.teamout.model.enumeration.RoleEnum;
 import javax.persistence.*;
 import java.util.Optional;
 
-@Data
 @Entity
 public class Role
 {

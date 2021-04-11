@@ -19,13 +19,21 @@
                         </li>
                         <li sec:authorize="hasRole('ROLE_EMPLOYEE')">
                             <a class="navbar-link"
-                               th:href="${'/user/'+ currentUser.getUserId().toString() +'/profile'}">
+                               th:href="${'/organization/' +
+                                          currentUser.getOrganizationId().toString() +
+                                          '/employee/' +
+                                          currentUser.getEmployeeUser.getId().toString() +
+                                          '/absences'}">
                                 Absences
                             </a>
                         </li>
                         <li sec:authorize="hasRole('ROLE_EMPLOYEE')">
                             <a class="navbar-link"
-                               th:href="${'/user/'+ currentUser.getUserId().toString() +'/profile'}">
+                               th:href="${'/organization/' +
+                                          currentUser.getOrganizationId().toString() +
+                                          '/employee/' +
+                                          currentUser.getEmployeeUser.getId().toString() +
+                                          '/absences/approval'}">
                                 Approval
                             </a>
                         </li>

@@ -7,53 +7,99 @@ import java.util.Date;
 
 public class AbsenceDto
 {
-    private Date DateFrom;
+    private String DateFrom;
 
-    private Date DateTo;
+    private String DateTo;
 
-    private AbsenceStatusEnum AbsenceStatusEnum;
+    private String AbsenceStatus;
 
-    private AbsenceTypeEnum AbsenceTypeEnum;
+    private String AbsenceType;
 
-    public Date getDateFrom()
+    private String EmployeeFirstName;
+
+    private String EmployeeLastName;
+
+    private Long Id;
+
+    private Long EmployeeId;
+
+    public String getDateFrom()
     {
         return DateFrom;
     }
 
-    public void setDateFrom(Date dateFrom)
+    public void setDateFrom(String dateFrom)
     {
         DateFrom = dateFrom;
     }
 
-    public Date getDateTo()
+    public String getDateTo()
     {
         return DateTo;
     }
 
-    public void setDateTo(Date dateTo)
+    public void setDateTo(String dateTo)
     {
         DateTo = dateTo;
     }
 
-    public mk.ukim.finki.mihail.risteski.teamout.model.enumeration.AbsenceStatusEnum getAbsenceStatusEnum()
+    public String getAbsenceStatus()
     {
-        return AbsenceStatusEnum;
+        return AbsenceStatus;
     }
 
-    public void setAbsenceStatusEnum(
-            mk.ukim.finki.mihail.risteski.teamout.model.enumeration.AbsenceStatusEnum absenceStatusEnum)
+    public void setAbsenceStatus(String absenceStatusEnum)
     {
-        AbsenceStatusEnum = absenceStatusEnum;
+        AbsenceStatus = absenceStatusEnum;
     }
 
-    public mk.ukim.finki.mihail.risteski.teamout.model.enumeration.AbsenceTypeEnum getAbsenceTypeEnum()
+    public String getAbsenceType()
     {
-        return AbsenceTypeEnum;
+        return AbsenceType;
     }
 
-    public void setAbsenceTypeEnum(
-            mk.ukim.finki.mihail.risteski.teamout.model.enumeration.AbsenceTypeEnum absenceTypeEnum)
+    public void setAbsenceType(String absenceTypeEnum)
     {
-        AbsenceTypeEnum = absenceTypeEnum;
+        AbsenceType = absenceTypeEnum;
+    }
+
+    public String getEmployeeFirstName()
+    {
+        return EmployeeFirstName;
+    }
+
+    public void setEmployeeFirstName(String employeeFirstName)
+    {
+        EmployeeFirstName = employeeFirstName;
+    }
+
+    public String getEmployeeLastName()
+    {
+        return EmployeeLastName;
+    }
+
+    public void setEmployeeLastName(String employeeLastName)
+    {
+        EmployeeLastName = employeeLastName;
+    }
+
+    public Long getId()
+    {
+        return Id;
+    }
+
+    public void setId(Long id)
+    {
+        Id = id;
+    }
+
+    public Long getEmployeeId()
+    {
+        return EmployeeId;
+    }
+
+    public void setEmployeeId(Long employeeId)
+    {
+        EmployeeId = employeeId;
     }
 }

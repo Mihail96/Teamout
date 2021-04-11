@@ -1,11 +1,11 @@
 package mk.ukim.finki.mihail.risteski.teamout.model.entity;
 
 import lombok.Data;
+import lombok.Setter;
 
 import javax.persistence.*;
 import java.util.Date;
 
-@Data
 @Entity
 public class Absence
 {
@@ -56,12 +56,12 @@ public class Absence
         DateTo = dateTo;
     }
 
-    public mk.ukim.finki.mihail.risteski.teamout.model.entity.Employee getEmployee()
+    public Employee getEmployee()
     {
         return Employee;
     }
 
-    public void setEmployee(mk.ukim.finki.mihail.risteski.teamout.model.entity.Employee employee)
+    public void setEmployee(Employee employee)
     {
         Employee = employee;
     }
