@@ -12,7 +12,7 @@
     </div>
 
     <form xmlns:th="http://www.thymeleaf.org"
-          th:action="${'/organization/' + currentUser.getOrganizationId() + '/employee/' + employeeDetailsDto.getId() + '/update'}"
+          th:action="${'/organization/' + currentUser.getOrganizationId() + '/employee/' + employeeDetailsDto.getId()}"
           method="post">
         <div class="container margin-top-bottom">
             <div class="row margin-top-bottom">
@@ -25,19 +25,86 @@
                             <div class="container">
                                 <div class="row margin-top-bottom">
                                     <div class="col-4">
-                                        <label for="FirstName">First name</label>
+                                        <label for="HolidayDaysUsed">Holiday days used</label>
                                     </div>
                                     <div class="col-8">
                                         <input type="text"
-                                               id="FirstName"
-                                               name="FirstName"
+                                               id="HolidayDaysUsed"
+                                               name="HolidayDaysUsed"
                                                class="form-control"
-                                               placeholder="FirstName"
-                                               th:value="${userDto.getFirstName()}">
+                                               placeholder="HolidayDaysUsed"
+                                               th:value="${employeeDetailsDto.getHolidayDaysUsed()}">
                                     </div>
                                 </div>
                                 <div class="row margin-top-bottom">
-                                    <input type="submit" class="btn btn-lg btn-primary" value="Save"/>
+                                    <div class="col-4">
+                                        <label for="HolidayDaysBalance">Holiday days balance</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text"
+                                               id="HolidayDaysBalance"
+                                               name="HolidayDaysBalance"
+                                               class="form-control"
+                                               placeholder="HolidayDaysBalance"
+                                               th:value="${employeeDetailsDto.getHolidayDaysBalance()}">
+                                    </div>
+                                </div>
+                                <div class="row margin-top-bottom">
+                                    <div class="col-4">
+                                        <label for="SickleaveDaysUsed">Sickleave days used</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text"
+                                               id="SickleaveDaysUsed"
+                                               name="SickleaveDaysUsed"
+                                               class="form-control"
+                                               placeholder="SickleaveDaysUsed"
+                                               th:value="${employeeDetailsDto.getSickleaveDaysUsed()}">
+                                    </div>
+                                </div>
+                                <div class="row margin-top-bottom">
+                                    <div class="col-4">
+                                        <label for="SickleaveDaysBalance">Sickleave days balance</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text"
+                                               id="SickleaveDaysBalance"
+                                               name="SickleaveDaysBalance"
+                                               class="form-control"
+                                               placeholder="SickleaveDaysBalance"
+                                               th:value="${employeeDetailsDto.getSickleaveDaysBalance()}">
+                                    </div>
+                                </div>
+                                <div class="row margin-top-bottom">
+                                    <div class="col-4">
+                                        <label for="ExtraordinaryDaysUsed">Extraordinary days used</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text"
+                                               id="ExtraordinaryDaysUsed"
+                                               name="ExtraordinaryDaysUsed"
+                                               class="form-control"
+                                               placeholder="ExtraordinaryDaysUsed"
+                                               th:value="${employeeDetailsDto.getExtraordinaryDaysUsed()}">
+                                    </div>
+                                </div>
+                                <div class="row margin-top-bottom">
+                                    <div class="col-4">
+                                        <label for="ExtraordinaryDaysBalance">Extraordinary days balance</label>
+                                    </div>
+                                    <div class="col-8">
+                                        <input type="text"
+                                               id="ExtraordinaryDaysBalance"
+                                               name="ExtraordinaryDaysBalance"
+                                               class="form-control"
+                                               placeholder="ExtraordinaryDaysBalance"
+                                               th:value="${employeeDetailsDto.getExtraordinaryDaysBalance()}">
+                                    </div>
+                                </div>
+                                <div class="row margin-top-bottom">
+                                    <div class="col-12">
+                                        <input type="submit" class="btn btn-lg btn-primary" value="Save"/>
+                                    </div>
                                 </div>
                             </div>
                         </div>
@@ -46,34 +113,6 @@
             </div>
         </div>
     </form>
-
-    <div class="row">
-        <div class="col-4">
-            <div class="p-2">
-                <div class="row margin-top-bottom flex-container box box-shadow padding-1 align-center">
-                    <div class="col-12 flex-container align-center justify-center overflow-hidden">
-                        <img class="image-icon"
-                             th:if="${employeeDetailsDto.getUser().getPictureId() != null}"
-                             th:src="${'/organization/' +
-                                           currentUser.getOrganizationId().toString() +
-                                           '/image/' +
-                                           employeeDetailsDto.getUser().getPictureId().toString()}">
-                        <img class="image-icon"
-                             th:if="${employeeDetailsDto.getUser().getPictureId() == null}"
-                             src="/User.jpg">
-                    </div>
-                    <div class="col-12 flex-container align-center justify-center overflow-hidden">
-                        <h4 th:text="${employeeDetailsDto.getUser().getFirstName() +
-                                           ' ' +
-                                           employeeDetailsDto.getUser().getLastName()}"></h4>
-                    </div>
-                    <div class="col-12 flex-container align-center justify-center overflow-hidden">
-                        <h5 th:text="${employeeDetailsDto.getUser().getEmail()}"></h5>
-                    </div>
-                </div>
-            </div>
-        </div>
-    </div>
 
     <h1>Responsible to: <span th:if="${employeeDetailsDto.getResponsibleToEmployee().size() == 0}">Nobody</span></h1>
     <div class="row">

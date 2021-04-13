@@ -8,6 +8,7 @@ import mk.ukim.finki.mihail.risteski.teamout.model.entity.Organization;
 import mk.ukim.finki.mihail.risteski.teamout.model.entity.User;
 import mk.ukim.finki.mihail.risteski.teamout.model.enumeration.RoleEnum;
 import mk.ukim.finki.mihail.risteski.teamout.model.request.DraftUserCreateRequest;
+import mk.ukim.finki.mihail.risteski.teamout.model.request.EmployeeUpdateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.repository.DraftUserRepository;
 import mk.ukim.finki.mihail.risteski.teamout.repository.EmployeeRepository;
 import mk.ukim.finki.mihail.risteski.teamout.repository.OrganizationRepository;
@@ -23,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
+
+import static mk.ukim.finki.mihail.risteski.teamout.util.EmployeeUtils.CreateEmployeeDetailsDto;
 
 @Service
 public class EmployeeService implements IEmployeeService
@@ -91,29 +94,7 @@ public class EmployeeService implements IEmployeeService
     @Override
     public EmployeeDetailsDto GetEmployeeDetails(Long organizationId, Long employeeId)
     {
-        Employee employee = _employeeRepository.GetEmployeeById(employeeId);
-
-        EmployeeDetailsDto employeeDetailsDto = new EmployeeDetailsDto();
-
-        User user = employee.getUserInOrganization().getUser();
-        employeeDetailsDto.setUser(UserUtils.CreateUserDto(user));
-        employeeDetailsDto.setId(employee.getId());
-
-        List<EmployeeDto> responsibleToEmployee = new ArrayList<>();
-        for (Employee currentEmployee: employee.getResponsibleTo())
-        {
-            responsibleToEmployee.add(EmployeeUtils.CreateEmployeeDto(currentEmployee));
-        }
-        employeeDetailsDto.setResponsibleToEmployee(responsibleToEmployee);
-
-        List<EmployeeDto> responsibleForEmployees = new ArrayList<>();
-        for (Employee currentEmployee: employee.getResponsibleFor())
-        {
-            responsibleForEmployees.add(EmployeeUtils.CreateEmployeeDto(currentEmployee));
-        }
-        employeeDetailsDto.setResponsibleForEmployees(responsibleForEmployees);
-
-        return employeeDetailsDto;
+        return EmployeeUtils.CreateEmployeeDetailsDto(_employeeRepository.GetEmployeeById(employeeId));
     }
 
     @Override
@@ -175,6 +156,21 @@ public class EmployeeService implements IEmployeeService
         dbEmployee.setResponsibleFor(employees);
 
         _employeeRepository.saveAndFlush(dbEmployee);
+    }
+
+    @Override
+    public void UpdateEmployeeDetails(Long organizationId, Long employeeId, EmployeeUpdateRequest employeeUpdateRequest)
+    {
+        Employee employee = _employeeRepository.GetEmployeeById(employeeId);
+
+        employee.setHolidayDaysBalance(employeeUpdateRequest.getHolidayDaysBalance());
+        employee.setHolidayDaysUsed(employeeUpdateRequest.getHolidayDaysUsed());
+        employee.setSickleaveDaysBalance(employeeUpdateRequest.getSickleaveDaysBalance());
+        employee.setSickleaveDaysUsed(employeeUpdateRequest.getSickleaveDaysUsed());
+        employee.setExtraordinaryDaysBalance(employeeUpdateRequest.getExtraordinaryDaysBalance());
+        employee.setExtraordinaryDaysUsed(employeeUpdateRequest.getExtraordinaryDaysUsed());
+
+        _employeeRepository.saveAndFlush(employee);
     }
 
     private List<EmployeeDto> getEmployeeDtos(Long organizationId)

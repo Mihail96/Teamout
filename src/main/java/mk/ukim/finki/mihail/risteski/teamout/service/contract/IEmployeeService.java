@@ -3,6 +3,7 @@ package mk.ukim.finki.mihail.risteski.teamout.service.contract;
 import mk.ukim.finki.mihail.risteski.teamout.model.dto.EmployeeDetailsDto;
 import mk.ukim.finki.mihail.risteski.teamout.model.dto.EmployeeDto;
 import mk.ukim.finki.mihail.risteski.teamout.model.request.DraftUserCreateRequest;
+import mk.ukim.finki.mihail.risteski.teamout.model.request.EmployeeUpdateRequest;
 
 import java.util.List;
 
@@ -20,4 +21,6 @@ public interface IEmployeeService
     void AddEmployeeResponsibleTo(Long organizationId, Long employeeId, Long[] employeeIds);
 
     void AddEmployeeResponsibleFor(Long organizationId, Long employeeId, Long[] employeeIds);
+
+    void UpdateEmployeeDetails(Long organizationId, Long employeeId, EmployeeUpdateRequest employeeUpdateRequest);
 }

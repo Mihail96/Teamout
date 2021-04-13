@@ -12,6 +12,7 @@ public class ReportUtil
     public static String ParseReportTemplate(String templateName, Map<String, Object> variableMap)
     {
         ClassLoaderTemplateResolver templateResolver = new ClassLoaderTemplateResolver();
+        templateResolver.setPrefix("/templates/pdf/");
         templateResolver.setSuffix(".html");
         templateResolver.setTemplateMode(TemplateMode.HTML);
 

@@ -1,16 +1,20 @@
 package mk.ukim.finki.mihail.risteski.teamout.service;
 
 import com.lowagie.text.DocumentException;
+import mk.ukim.finki.mihail.risteski.teamout.model.dto.EmployeeDetailsDto;
+import mk.ukim.finki.mihail.risteski.teamout.model.dto.FileDto;
 import mk.ukim.finki.mihail.risteski.teamout.model.entity.Absence;
+import mk.ukim.finki.mihail.risteski.teamout.model.entity.Employee;
 import mk.ukim.finki.mihail.risteski.teamout.repository.AbsenceRepository;
 import mk.ukim.finki.mihail.risteski.teamout.repository.EmployeeRepository;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IReportService;
+import mk.ukim.finki.mihail.risteski.teamout.util.EmployeeUtils;
 import mk.ukim.finki.mihail.risteski.teamout.util.ReportUtil;
 import org.springframework.stereotype.Service;
 import org.xhtmlrenderer.pdf.ITextRenderer;
 
 import java.io.ByteArrayOutputStream;
-import java.io.File;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -29,7 +33,26 @@ public class ReportService implements IReportService
     }
 
     @Override
-    public void GetAbsenceReport(Long organizationId) throws DocumentException
+    public FileDto GetEmpoyeeReport(Long organizationId) throws DocumentException
+    {
+        List<Employee> employees = _employeeRepository.GetEmployeesInOrganization(organizationId);
+
+        List<EmployeeDetailsDto> employeeDetailsDtos = new ArrayList<>();
+        for (Employee employee: employees)
+        {
+            employeeDetailsDtos.add(EmployeeUtils.CreateEmployeeDetailsDto(employee));
+        }
+
+        Map<String, Object> variablesMap = new HashMap<>();
+        variablesMap.put("employeeDetailsDtos", employeeDetailsDtos);
+
+        String html = ReportUtil.ParseReportTemplate("employee-report", variablesMap);
+
+        return new FileDto("Absence report.pdf", GeneratePdf(html));
+    }
+
+    @Override
+    public FileDto GetAbsenceReport(Long organizationId) throws DocumentException
     {
         List<Absence> absences = _absenceRepository.GetAbsencesInOrganization(organizationId);
 
@@ -37,10 +60,8 @@ public class ReportService implements IReportService
         variablesMap.put("absences", absences);
 
         String html = ReportUtil.ParseReportTemplate("absence-report", variablesMap);
-        byte[] reportContent = GeneratePdf(html);
-        String reportName = "Absence report.pdf";
 
-
+        return new FileDto("Absence report.pdf", GeneratePdf(html));
     }
 
     private byte[] GeneratePdf(String html) throws DocumentException
@@ -49,6 +70,7 @@ public class ReportService implements IReportService
 
         ITextRenderer renderer = new ITextRenderer();
         renderer.setDocumentFromString(html);
+
         renderer.layout();
         renderer.createPDF(outputStream);
 

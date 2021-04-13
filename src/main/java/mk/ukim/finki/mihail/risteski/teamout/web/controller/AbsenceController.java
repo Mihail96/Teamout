@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import javax.xml.bind.ValidationException;
 import java.util.List;
 
 import static mk.ukim.finki.mihail.risteski.teamout.web.controller.BaseController.HandleBaseAttributes;
@@ -72,7 +73,15 @@ public class AbsenceController
                              @PathVariable(value="absenceId") Long absenceId,
                              Model model) throws NotFoundException
     {
-        AbsenceDto absenceDto = _absenceService.GetAbsence(organizationId, absenceId);
+        AbsenceDto absenceDto = new AbsenceDto();
+        try
+        {
+            absenceDto = _absenceService.GetAbsence(organizationId, absenceId);
+        }
+        catch (Exception e)
+        {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
 
         model.addAttribute("absenceDto", absenceDto);
         model.addAttribute("bodyContent", "details-absence");
@@ -96,9 +105,16 @@ public class AbsenceController
     public String CreateEmployeeAbsence(@PathVariable(value="organizationId") Long organizationId,
                                         @PathVariable(value="employeeId") Long employeeId,
                                         AbsenceCreateRequest request,
-                                        Model model) throws NotFoundException
+                                        Model model)
     {
-        _absenceService.CreateAbsence(organizationId, employeeId, request);
+        try
+        {
+            _absenceService.CreateAbsence(organizationId, employeeId, request);
+        }
+        catch (Exception e)
+        {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
 
         return "redirect:/organization/"+ organizationId.toString() +"/employee/"+ employeeId.toString() +"/absences";
     }
@@ -120,7 +136,14 @@ public class AbsenceController
                                          @PathVariable(value="absenceId") Long absenceId,
                                          Model model)
     {
-        _absenceService.ApproveAbsence(organizationId, employeeId, absenceId);
+        try
+        {
+            _absenceService.ApproveAbsence(organizationId, employeeId, absenceId);
+        }
+        catch (Exception e)
+        {
+            model.addAttribute("errorMessage", e.getMessage());
+        }
 
         return "redirect:/organization/"+ organizationId.toString() +"/employee/"+ employeeId.toString() +"/absences/approval";
     }

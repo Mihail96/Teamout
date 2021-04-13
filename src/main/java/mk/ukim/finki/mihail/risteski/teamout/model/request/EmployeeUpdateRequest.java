@@ -1,9 +1,6 @@
-package mk.ukim.finki.mihail.risteski.teamout.model.dto;
+package mk.ukim.finki.mihail.risteski.teamout.model.request;
 
-import javax.persistence.Column;
-import java.util.List;
-
-public class EmployeeDetailsDto extends EmployeeDto
+public class EmployeeUpdateRequest
 {
     private int HolidayDaysUsed;
     private int HolidayDaysBalance;
@@ -11,29 +8,6 @@ public class EmployeeDetailsDto extends EmployeeDto
     private int SickleaveDaysBalance;
     private int ExtraordinaryDaysUsed;
     private int ExtraordinaryDaysBalance;
-
-    private List<EmployeeDto> ResponsibleToEmployee;
-    private List<EmployeeDto> ResponsibleForEmployees;
-
-    public List<EmployeeDto> getResponsibleToEmployee()
-    {
-        return ResponsibleToEmployee;
-    }
-
-    public void setResponsibleToEmployee(List<EmployeeDto> responsibleToEmployee)
-    {
-        ResponsibleToEmployee = responsibleToEmployee;
-    }
-
-    public List<EmployeeDto> getResponsibleForEmployees()
-    {
-        return ResponsibleForEmployees;
-    }
-
-    public void setResponsibleForEmployees(List<EmployeeDto> responsibleForEmployees)
-    {
-        ResponsibleForEmployees = responsibleForEmployees;
-    }
 
     public int getHolidayDaysUsed()
     {

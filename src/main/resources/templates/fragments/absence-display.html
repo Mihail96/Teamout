@@ -1,4 +1,4 @@
-<div xmlns:th="http://www.thymeleaf.org" class="box box-shadow">
+<div th:if="${currentUser.getEmployeeUser() != null}" xmlns:th="http://www.thymeleaf.org" class="box box-shadow">
     <div class="box-header">
         Available absences
     </div>
@@ -15,7 +15,7 @@
                 <div class="green"
                      th:if="${currentUser.getEmployeeUser().getHolidayDaysBalance() + currentUser.getEmployeeUser().getHolidayDaysUsed()} != 0"
                      th:style="'flex: ' + ${currentUser.getEmployeeUser().getHolidayDaysBalance()} + ';'"></div>
-                <div class=" absence-bar-end"
+                <div class="lightgreen absence-bar-end"
                      th:if="${currentUser.getEmployeeUser().getHolidayDaysBalance() + currentUser.getEmployeeUser().getHolidayDaysUsed()} != 0"
                      th:style="'flex: ' + ${currentUser.getEmployeeUser().getHolidayDaysUsed()} + ';'"></div>
             </div>
@@ -29,8 +29,8 @@
                      style="flex: 1;"></div>
                 <div class="green"
                      th:if="${currentUser.getEmployeeUser().getSickleaveDaysBalance() + currentUser.getEmployeeUser().getSickleaveDaysUsed()} != 0"
-                     th:style="'flex: ' + ${currentUser.getEmployeeUser().getHolidayDaysBalancegetSickleaveDaysBalance()} + ';'"></div>
-                <div class=" absence-bar-end"
+                     th:style="'flex: ' + ${currentUser.getEmployeeUser().getSickleaveDaysBalance()} + ';'"></div>
+                <div class="lightgreen absence-bar-end"
                      th:if="${currentUser.getEmployeeUser().getSickleaveDaysBalance() + currentUser.getEmployeeUser().getSickleaveDaysUsed()} != 0"
                      th:style="'flex: ' + ${currentUser.getEmployeeUser().getSickleaveDaysUsed()} + ';'"></div>
             </div>
@@ -44,8 +44,8 @@
                      style="flex: 1;"></div>
                 <div class="green"
                      th:if="${currentUser.getEmployeeUser().getExtraordinaryDaysBalance() + currentUser.getEmployeeUser().getExtraordinaryDaysUsed()} != 0"
-                     th:style="'flex: ' + ${currentUser.getEmployeeUser().getHolidayDaysBalancegetExtraordinaryDaysBalance()} + ';'"></div>
-                <div class=" absence-bar-end"
+                     th:style="'flex: ' + ${currentUser.getEmployeeUser().getExtraordinaryDaysBalance()} + ';'"></div>
+                <div class="lightgreen absence-bar-end"
                      th:if="${currentUser.getEmployeeUser().getExtraordinaryDaysBalance() + currentUser.getEmployeeUser().getExtraordinaryDaysUsed()} != 0"
                      th:style="'flex: ' + ${currentUser.getEmployeeUser().getExtraordinaryDaysUsed()} + ';'"></div>
             </div>

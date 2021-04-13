@@ -4,6 +4,7 @@ import mk.ukim.finki.mihail.risteski.teamout.model.dto.EmployeeDetailsDto;
 import mk.ukim.finki.mihail.risteski.teamout.model.dto.EmployeeDto;
 import mk.ukim.finki.mihail.risteski.teamout.model.request.DraftUserCreateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.model.request.EmployeeResponsibleRequest;
+import mk.ukim.finki.mihail.risteski.teamout.model.request.EmployeeUpdateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IEmployeeService;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -59,6 +60,18 @@ public class EmployeeController
         HandleBaseAttributes(model);
 
         return "root";
+    }
+
+    @PostMapping(value = "/{employeeId}")
+    public String UpdateEmployeeDetails(@PathVariable(value="organizationId") Long organizationId,
+                                        @PathVariable(value="employeeId") Long employeeId,
+                                        EmployeeUpdateRequest employeeUpdateRequest,
+                                        Model model)
+    {
+        _employeeService.UpdateEmployeeDetails(organizationId, employeeId, employeeUpdateRequest);
+        HandleBaseAttributes(model);
+
+        return "redirect:/organization/"+ organizationId.toString() +"/employee/"+ employeeId.toString();
     }
 
     @GetMapping(value = "/{employeeId}/add-responsible-to")
