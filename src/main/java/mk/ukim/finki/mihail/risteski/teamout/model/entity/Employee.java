@@ -42,6 +42,16 @@ public class Employee
     @OneToMany(mappedBy = "Employee")
     private List<Absence> Absences;
 
+    public void AddResponsibleFor(Employee responsibleFor)
+    {
+        ResponsibleFor.add(responsibleFor);
+    }
+
+    public void AddResponsibleTo(Employee responsibleTo)
+    {
+        ResponsibleFor.add(responsibleTo);
+    }
+
     public Long getId()
     {
         return Id;

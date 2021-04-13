@@ -5,7 +5,7 @@ import mk.ukim.finki.mihail.risteski.teamout.model.entity.Address;
 import mk.ukim.finki.mihail.risteski.teamout.model.entity.Image;
 import mk.ukim.finki.mihail.risteski.teamout.model.entity.User;
 
-public class UserUtils
+public class UserUtil
 {
     public static UserDto CreateUserDto(User user)
     {

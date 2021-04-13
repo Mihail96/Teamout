@@ -11,6 +11,7 @@ import mk.ukim.finki.mihail.risteski.teamout.model.request.AbsenceCreateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.repository.AbsenceRepository;
 import mk.ukim.finki.mihail.risteski.teamout.repository.EmployeeRepository;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IAbsenceService;
+import mk.ukim.finki.mihail.risteski.teamout.util.AbsenceUtil;
 import org.springframework.stereotype.Service;
 
 import javax.xml.bind.ValidationException;
@@ -42,7 +43,7 @@ public class AbsenceService implements IAbsenceService
 
         for (Absence absence: absences)
         {
-            absenceDtos.add(CreateAbsenceDto(absence));
+            absenceDtos.add(AbsenceUtil.CreateAbsenceDto(absence));
         }
 
         return absenceDtos;
@@ -56,7 +57,7 @@ public class AbsenceService implements IAbsenceService
 
         for (Absence absence: absences)
         {
-            absenceDtos.add(CreateAbsenceDto(absence));
+            absenceDtos.add(AbsenceUtil.CreateAbsenceDto(absence));
         }
 
         return absenceDtos;
@@ -76,7 +77,7 @@ public class AbsenceService implements IAbsenceService
 
         for (Absence absence: absences)
         {
-            absenceDtos.add(CreateAbsenceDto(absence));
+            absenceDtos.add(AbsenceUtil.CreateAbsenceDto(absence));
         }
 
         return absenceDtos;
@@ -87,7 +88,7 @@ public class AbsenceService implements IAbsenceService
     {
         Absence absence = _absenceRepository.GetAbsence(organizationId, absenceId);
 
-        return CreateAbsenceDto(absence);
+        return AbsenceUtil.CreateAbsenceDto(absence);
     }
 
     @Override
@@ -190,25 +191,5 @@ public class AbsenceService implements IAbsenceService
         Absence absence = _absenceRepository.GetAbsenceById(absenceId);
         absence.setStatus(AbsenceStatusEnum.Rejected.ToAbsenceStatus());
         _absenceRepository.saveAndFlush(absence);
-    }
-
-    private AbsenceDto CreateAbsenceDto(Absence absence) throws NotFoundException
-    {
-        DateFormat dateFormat = new SimpleDateFormat("dd/MM/yyyy");
-
-        AbsenceDto absenceDto = new AbsenceDto();
-        absenceDto.setId(absence.getId());
-        absenceDto.setDateFrom(dateFormat.format(absence.getDateFrom()));
-        absenceDto.setDateTo(dateFormat.format(absence.getDateTo()));
-        absenceDto.setAbsenceStatus(absence.getStatus().getName());
-        absenceDto.setAbsenceType(absence.getType().getName());
-
-        Employee employee = absence.getEmployee();
-        User user = employee.getUserInOrganization().getUser();
-        absenceDto.setEmployeeId(employee.getId());
-        absenceDto.setEmployeeFirstName(user.getFirstName());
-        absenceDto.setEmployeeLastName(user.getLastName());
-
-        return absenceDto;
     }
 }

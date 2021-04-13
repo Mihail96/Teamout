@@ -69,9 +69,11 @@
         <div class="col-md-6"
              sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
             <div class="pt-3 pb-3">
-                <div class="flex-container justify-center align-center box box-shadow-hover height-5">
-                    Reports
-                </div>
+                <a class="text-link" th:href="${'/organization/'+ currentUser.getOrganizationId().toString() + '/report'}">
+                    <div class="flex-container justify-center align-center box box-shadow-hover height-5">
+                        Reports
+                    </div>
+                </a>
             </div>
         </div>
         <div class="col-12"

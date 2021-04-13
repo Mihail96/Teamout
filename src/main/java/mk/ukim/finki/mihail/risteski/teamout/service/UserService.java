@@ -9,7 +9,7 @@ import mk.ukim.finki.mihail.risteski.teamout.model.request.DraftUserCreateReques
 import mk.ukim.finki.mihail.risteski.teamout.model.request.UserUpdateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.repository.*;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IUserService;
-import mk.ukim.finki.mihail.risteski.teamout.util.UserUtils;
+import mk.ukim.finki.mihail.risteski.teamout.util.UserUtil;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,7 +18,6 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
-import java.util.Optional;
 
 @Service
 public class UserService implements IUserService
@@ -57,7 +56,7 @@ public class UserService implements IUserService
     @Override
     public UserDto GetUserProfile(Long userId)
     {
-        return UserUtils.CreateUserDto(_userRepository.GetUser(userId));
+        return UserUtil.CreateUserDto(_userRepository.GetUser(userId));
     }
 
     @Override
@@ -166,7 +165,7 @@ public class UserService implements IUserService
 
         _userRepository.saveAndFlush(user);
 
-        return UserUtils.CreateUserDto(user);
+        return UserUtil.CreateUserDto(user);
     }
 
     @Override

@@ -4,30 +4,25 @@
 
 <table style="width: 100%">
     <tr>
-        <th style="text-align: start">Name</th>
+        <th style="text-align: start">Type</th>
+        <th style="text-align: start">Status</th>
 
-        <th style="text-align: start">Holiday days balance</th>
-        <th style="text-align: start">Holiday days used</th>
+        <th style="text-align: start">Date from</th>
+        <th style="text-align: start">Date to</th>
 
-        <th style="text-align: start">Sickleave days balance</th>
-        <th style="text-align: start">Sickleave days used</th>
-
-        <th style="text-align: start">Extraordinary days balance</th>
-        <th style="text-align: start">Extraordinary days used</th>
+        <th style="text-align: start">Employee</th>
     </tr>
-    <tr th:each="employeeDetailsDto : ${employeeDetailsDtos}">
-        <td th:text="${employeeDetailsDto.getUser().getFirstName() + ' ' + employeeDetailsDto.getUser().getLastName()}">
-            Name
+    <tr th:each="absenceDto : ${absenceDtos}">
+
+        <td th:text="${absenceDto.getAbsenceType()}">Type</td>
+        <td th:text="${absenceDto.getAbsenceStatus()}">Status</td>
+
+        <td th:text="${absenceDto.getDateFrom()}">Date from</td>
+        <td th:text="${absenceDto.getDateTo()}">Date to</td>
+
+        <td th:text="${absenceDto.getEmployeeFirstName() + ' ' + absenceDto.getEmployeeLastName()}">
+            Employee
         </td>
-
-        <td th:text="${employeeDetailsDto.getHolidayDaysBalance()}">Holiday days balance</td>
-        <td th:text="${employeeDetailsDto.getHolidayDaysUsed()}">Holiday days used</td>
-
-        <td th:text="${employeeDetailsDto.getSickleaveDaysBalance()}">Sickleave days balance</td>
-        <td th:text="${employeeDetailsDto.getSickleaveDaysUsed()}">Sickleave days used</td>
-
-        <td th:text="${employeeDetailsDto.getExtraordinaryDaysBalance()}">Extraordinary days balance</td>
-        <td th:text="${employeeDetailsDto.getExtraordinaryDaysUsed()}">Extraordinary days used</td>
     </tr>
 </table>
 </body>

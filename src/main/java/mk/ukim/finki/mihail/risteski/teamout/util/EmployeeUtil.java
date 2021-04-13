@@ -8,14 +8,14 @@ import mk.ukim.finki.mihail.risteski.teamout.model.entity.User;
 import java.util.ArrayList;
 import java.util.List;
 
-public class EmployeeUtils
+public class EmployeeUtil
 {
     public static EmployeeDto CreateEmployeeDto(Employee employee)
     {
         EmployeeDto employeeDto = new EmployeeDto();
         User user = employee.getUserInOrganization().getUser();
 
-        employeeDto.setUser(UserUtils.CreateUserDto(user));
+        employeeDto.setUser(UserUtil.CreateUserDto(user));
         employeeDto.setId(employee.getId());
 
         return employeeDto;
@@ -26,7 +26,7 @@ public class EmployeeUtils
         EmployeeDetailsDto employeeDetailsDto = new EmployeeDetailsDto();
 
         User user = employee.getUserInOrganization().getUser();
-        employeeDetailsDto.setUser(UserUtils.CreateUserDto(user));
+        employeeDetailsDto.setUser(UserUtil.CreateUserDto(user));
         employeeDetailsDto.setId(employee.getId());
 
         employeeDetailsDto.setHolidayDaysBalance(employee.getHolidayDaysBalance());
@@ -39,14 +39,14 @@ public class EmployeeUtils
         List<EmployeeDto> responsibleToEmployee = new ArrayList<>();
         for (Employee currentEmployee: employee.getResponsibleTo())
         {
-            responsibleToEmployee.add(EmployeeUtils.CreateEmployeeDto(currentEmployee));
+            responsibleToEmployee.add(EmployeeUtil.CreateEmployeeDto(currentEmployee));
         }
         employeeDetailsDto.setResponsibleToEmployee(responsibleToEmployee);
 
         List<EmployeeDto> responsibleForEmployees = new ArrayList<>();
         for (Employee currentEmployee: employee.getResponsibleFor())
         {
-            responsibleForEmployees.add(EmployeeUtils.CreateEmployeeDto(currentEmployee));
+            responsibleForEmployees.add(EmployeeUtil.CreateEmployeeDto(currentEmployee));
         }
         employeeDetailsDto.setResponsibleForEmployees(responsibleForEmployees);
         return employeeDetailsDto;

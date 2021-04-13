@@ -3,6 +3,7 @@ package mk.ukim.finki.mihail.risteski.teamout.web.controller;
 import javassist.NotFoundException;
 import mk.ukim.finki.mihail.risteski.teamout.model.dto.DraftUserDto;
 import mk.ukim.finki.mihail.risteski.teamout.service.UserService;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -33,6 +34,7 @@ public class RegisterController
     public String GetCreateDraftUser(@PathVariable(value="activationCode") String activationCode,
                                      Model model) throws NotFoundException
     {
+        SecurityContextHolder.clearContext();
         DraftUserDto draftUserDto = _userService.GetDraftUser(activationCode);
 
         model.addAttribute("bodyContent", "register-user");

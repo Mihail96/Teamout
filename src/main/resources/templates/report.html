@@ -1,0 +1,32 @@
+<div class="container margin-top-bottom"
+     xmlns:th="http://www.thymeleaf.org"
+     xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+    <div class="row">
+        <div class="col-md-12"
+             sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+            <div class="pt-3 pb-3">
+                <a class="text-link"
+                   th:href="${'/organization/' +
+                              currentUser.getOrganizationId().toString() +
+                              '/report/employee-report'}">
+                    <div class="flex-container justify-center align-center box box-shadow-hover height-5">
+                        Employee Report
+                    </div>
+                </a>
+            </div>
+        </div>
+        <div class="col-md-12"
+             sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+            <div class="pt-3 pb-3">
+                <a class="text-link"
+                   th:href="${'/organization/' +
+                              currentUser.getOrganizationId().toString() +
+                              '/report/absence-report'}">
+                    <div class="flex-container justify-center align-center box box-shadow-hover height-5">
+                        Absence Report
+                    </div>
+                </a>
+            </div>
+        </div>
+    </div>
+</div>

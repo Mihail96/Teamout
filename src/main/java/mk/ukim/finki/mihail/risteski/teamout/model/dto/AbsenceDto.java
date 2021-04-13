@@ -1,10 +1,5 @@
 package mk.ukim.finki.mihail.risteski.teamout.model.dto;
 
-import mk.ukim.finki.mihail.risteski.teamout.model.enumeration.AbsenceStatusEnum;
-import mk.ukim.finki.mihail.risteski.teamout.model.enumeration.AbsenceTypeEnum;
-
-import java.util.Date;
-
 public class AbsenceDto
 {
     private String DateFrom;

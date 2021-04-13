@@ -5,7 +5,6 @@ import mk.ukim.finki.mihail.risteski.teamout.model.dto.EmployeeDto;
 import mk.ukim.finki.mihail.risteski.teamout.model.entity.DraftUser;
 import mk.ukim.finki.mihail.risteski.teamout.model.entity.Employee;
 import mk.ukim.finki.mihail.risteski.teamout.model.entity.Organization;
-import mk.ukim.finki.mihail.risteski.teamout.model.entity.User;
 import mk.ukim.finki.mihail.risteski.teamout.model.enumeration.RoleEnum;
 import mk.ukim.finki.mihail.risteski.teamout.model.request.DraftUserCreateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.model.request.EmployeeUpdateRequest;
@@ -14,18 +13,14 @@ import mk.ukim.finki.mihail.risteski.teamout.repository.EmployeeRepository;
 import mk.ukim.finki.mihail.risteski.teamout.repository.OrganizationRepository;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IEmailService;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IEmployeeService;
-import mk.ukim.finki.mihail.risteski.teamout.util.EmployeeUtils;
-import mk.ukim.finki.mihail.risteski.teamout.util.UserUtils;
+import mk.ukim.finki.mihail.risteski.teamout.util.EmployeeUtil;
 import org.springframework.stereotype.Service;
-import org.springframework.web.bind.annotation.RequestParam;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;
 import java.util.Base64;
 import java.util.List;
 import java.util.stream.Collectors;
-
-import static mk.ukim.finki.mihail.risteski.teamout.util.EmployeeUtils.CreateEmployeeDetailsDto;
 
 @Service
 public class EmployeeService implements IEmployeeService
@@ -94,7 +89,7 @@ public class EmployeeService implements IEmployeeService
     @Override
     public EmployeeDetailsDto GetEmployeeDetails(Long organizationId, Long employeeId)
     {
-        return EmployeeUtils.CreateEmployeeDetailsDto(_employeeRepository.GetEmployeeById(employeeId));
+        return EmployeeUtil.CreateEmployeeDetailsDto(_employeeRepository.GetEmployeeById(employeeId));
     }
 
     @Override
@@ -112,7 +107,7 @@ public class EmployeeService implements IEmployeeService
         List<EmployeeDto> employeeDtos = new ArrayList<>();
         for (Employee employee : employees)
         {
-            employeeDtos.add(EmployeeUtils.CreateEmployeeDto(employee));
+            employeeDtos.add(EmployeeUtil.CreateEmployeeDto(employee));
         }
 
         return employeeDtos;
@@ -123,16 +118,14 @@ public class EmployeeService implements IEmployeeService
     {
         List<Employee> dbEmployees = _employeeRepository.GetEmployeeByIds(employeeIds);
 
+        Employee employee = new Employee();
+        employee.setId(employeeId);
         for (Employee dbCurrentEmployee: dbEmployees)
         {
-            Employee employee = new Employee();
-            List<Employee> employees = new ArrayList<>();
-            employee.setId(employeeId);
-            employees.add(employee);
-            dbCurrentEmployee.setResponsibleFor(employees);
-            _employeeRepository.save(dbCurrentEmployee);
+            dbCurrentEmployee.AddResponsibleFor(employee);
         }
 
+        _employeeRepository.saveAll(dbEmployees);
         _employeeRepository.flush();
     }
 
@@ -141,19 +134,13 @@ public class EmployeeService implements IEmployeeService
     {
         Employee dbEmployee = _employeeRepository.GetEmployeeById(employeeId);
 
-        List<Employee> employees = new ArrayList<>();
         for (Long currentEmployeeId: employeeIds)
         {
-            Employee respEmployee = new Employee();
-            //respEmployee.setId(currentEmployeeId);
-            //employees.add(respEmployee);
+            Employee employee = new Employee();
+            employee.setId(currentEmployeeId);
 
-            List<Employee> dbEmployees = new ArrayList<>();
-            dbEmployees.add(dbEmployee);
-            respEmployee.setResponsibleFor(dbEmployees);
+            dbEmployee.AddResponsibleFor(employee);
         }
-
-        dbEmployee.setResponsibleFor(employees);
 
         _employeeRepository.saveAndFlush(dbEmployee);
     }
@@ -180,7 +167,7 @@ public class EmployeeService implements IEmployeeService
         List<Employee> employees = _employeeRepository.GetEmployeesInOrganization(organizationId);
         for (Employee employee : employees)
         {
-            employeeDtos.add(EmployeeUtils.CreateEmployeeDto(employee));
+            employeeDtos.add(EmployeeUtil.CreateEmployeeDto(employee));
         }
         return employeeDtos;
     }

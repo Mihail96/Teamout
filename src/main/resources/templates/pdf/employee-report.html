@@ -4,7 +4,7 @@
 
 <table style="width: 100%">
     <tr>
-        <th style="text-align: start">Name</th>
+        <th style="text-align: start; min-width: 100px">Name</th>
 
         <th style="text-align: start">Holiday days balance</th>
         <th style="text-align: start">Holiday days used</th>
@@ -16,7 +16,8 @@
         <th style="text-align: start">Extraordinary days used</th>
     </tr>
     <tr th:each="employeeDetailsDto : ${employeeDetailsDtos}">
-        <td th:text="${employeeDetailsDto.getUser().getFirstName() + ' ' + employeeDetailsDto.getUser().getLastName()}">
+        <td th:text="${employeeDetailsDto.getUser().getFirstName() + ' ' + employeeDetailsDto.getUser().getLastName()}"
+            style="min-width: 100px">
             Name
         </td>
 

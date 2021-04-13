@@ -1,6 +1,8 @@
 package mk.ukim.finki.mihail.risteski.teamout.service;
 
 import com.lowagie.text.DocumentException;
+import javassist.NotFoundException;
+import mk.ukim.finki.mihail.risteski.teamout.model.dto.AbsenceDto;
 import mk.ukim.finki.mihail.risteski.teamout.model.dto.EmployeeDetailsDto;
 import mk.ukim.finki.mihail.risteski.teamout.model.dto.FileDto;
 import mk.ukim.finki.mihail.risteski.teamout.model.entity.Absence;
@@ -8,7 +10,8 @@ import mk.ukim.finki.mihail.risteski.teamout.model.entity.Employee;
 import mk.ukim.finki.mihail.risteski.teamout.repository.AbsenceRepository;
 import mk.ukim.finki.mihail.risteski.teamout.repository.EmployeeRepository;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IReportService;
-import mk.ukim.finki.mihail.risteski.teamout.util.EmployeeUtils;
+import mk.ukim.finki.mihail.risteski.teamout.util.AbsenceUtil;
+import mk.ukim.finki.mihail.risteski.teamout.util.EmployeeUtil;
 import mk.ukim.finki.mihail.risteski.teamout.util.ReportUtil;
 import org.springframework.stereotype.Service;
 import org.xhtmlrenderer.pdf.ITextRenderer;
@@ -33,14 +36,14 @@ public class ReportService implements IReportService
     }
 
     @Override
-    public FileDto GetEmpoyeeReport(Long organizationId) throws DocumentException
+    public FileDto GetEmployeeReport(Long organizationId) throws DocumentException
     {
         List<Employee> employees = _employeeRepository.GetEmployeesInOrganization(organizationId);
 
         List<EmployeeDetailsDto> employeeDetailsDtos = new ArrayList<>();
         for (Employee employee: employees)
         {
-            employeeDetailsDtos.add(EmployeeUtils.CreateEmployeeDetailsDto(employee));
+            employeeDetailsDtos.add(EmployeeUtil.CreateEmployeeDetailsDto(employee));
         }
 
         Map<String, Object> variablesMap = new HashMap<>();
@@ -52,12 +55,18 @@ public class ReportService implements IReportService
     }
 
     @Override
-    public FileDto GetAbsenceReport(Long organizationId) throws DocumentException
+    public FileDto GetAbsenceReport(Long organizationId) throws DocumentException, NotFoundException
     {
         List<Absence> absences = _absenceRepository.GetAbsencesInOrganization(organizationId);
 
+        List<AbsenceDto> absenceDtos = new ArrayList<>();
+        for (Absence absence: absences)
+        {
+            absenceDtos.add(AbsenceUtil.CreateAbsenceDto(absence));
+        }
+
         Map<String, Object> variablesMap = new HashMap<>();
-        variablesMap.put("absences", absences);
+        variablesMap.put("absenceDtos", absenceDtos);
 
         String html = ReportUtil.ParseReportTemplate("absence-report", variablesMap);
 
