@@ -11,7 +11,6 @@ public interface IEmployeeService
 {
     List<EmployeeDto> GetEmployeeList(Long organizationId);
 
-
     List<EmployeeDto> InviteEmployee(Long organizationId, DraftUserCreateRequest draftUserCreateRequest);
 
     EmployeeDetailsDto GetEmployeeDetails(Long organizationId, Long employeeId);
@@ -23,4 +22,8 @@ public interface IEmployeeService
     void AddEmployeeResponsibleFor(Long organizationId, Long employeeId, Long[] employeeIds);
 
     void UpdateEmployeeDetails(Long organizationId, Long employeeId, EmployeeUpdateRequest employeeUpdateRequest);
+
+    void RemoveEmployeeResponsibleTo(Long organizationId, Long employeeId, Long responsibleToEmployeeId);
+
+    void RemoveEmployeeResponsibleFor(Long organizationId, Long employeeId, Long responsibleForEmployeeId);
 }

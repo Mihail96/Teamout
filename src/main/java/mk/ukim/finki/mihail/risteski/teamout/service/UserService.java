@@ -10,6 +10,8 @@ import mk.ukim.finki.mihail.risteski.teamout.model.request.UserUpdateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.repository.*;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IUserService;
 import mk.ukim.finki.mihail.risteski.teamout.util.UserUtil;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -18,6 +20,7 @@ import org.springframework.util.StringUtils;
 import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
+import java.util.Optional;
 
 @Service
 public class UserService implements IUserService
@@ -161,6 +164,16 @@ public class UserService implements IUserService
             image.setName(request.getPictureName());
             image.setContent(request.getPictureContent());
             _imageRepository.save(image);
+            user.setPicture(image);
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+            if(authentication.isAuthenticated() &&
+                    authentication.getAuthorities().stream().noneMatch(x -> x.getAuthority().equals("ROLE_ANONYMOUS")))
+            {
+                User currentUser = (User)authentication.getPrincipal();
+                currentUser.setPicture(image);
+            }
         }
 
         _userRepository.saveAndFlush(user);

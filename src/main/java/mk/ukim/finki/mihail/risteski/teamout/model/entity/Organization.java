@@ -15,7 +15,7 @@ public class Organization
     @Column(length = 50)
     private String Name;
 
-    @OneToOne(fetch = FetchType.LAZY)
+    @OneToOne()
     private Image Logo;
 
     @OneToOne

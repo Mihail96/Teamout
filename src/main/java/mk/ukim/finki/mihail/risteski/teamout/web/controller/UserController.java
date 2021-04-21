@@ -60,12 +60,8 @@ public class UserController
                              UserUpdateRequest request,
                              Model model)
     {
-        UserDto userDto = _userService.UpdateUser(userId, request, pictureFile);
+        _userService.UpdateUser(userId, request, pictureFile);
 
-        model.addAttribute("userDto", userDto);
-        model.addAttribute("bodyContent", "profile-user");
-        HandleBaseAttributes(model);
-
-        return "root";
+        return "redirect:/user/" + userId.toString() + "/profile";
     }
 }

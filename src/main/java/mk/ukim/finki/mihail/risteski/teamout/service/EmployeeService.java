@@ -72,7 +72,7 @@ public class EmployeeService implements IEmployeeService
 
         String text = "Hello, your organization " +
                 organization.getName() +
-                " has invited you to create you account.\n" +
+                " has invited you to create you account as an employee.\n" +
                 "You can follow this link to create your user: " +
                 "http://localhost:5555" +
                 "/register" +
@@ -143,6 +143,30 @@ public class EmployeeService implements IEmployeeService
         }
 
         _employeeRepository.saveAndFlush(dbEmployee);
+    }
+
+    @Override
+    public void RemoveEmployeeResponsibleTo(Long organizationId, Long employeeId, Long responsibleToEmployeeId)
+    {
+        Employee dbEmployee = _employeeRepository.GetEmployeeById(employeeId);
+        Employee dbResponsibleToEmployee = _employeeRepository.GetEmployeeById(responsibleToEmployeeId);
+
+        dbResponsibleToEmployee.RemoveResponsibleFor(dbEmployee);
+
+        _employeeRepository.save(dbEmployee);
+        _employeeRepository.flush();
+    }
+
+    @Override
+    public void RemoveEmployeeResponsibleFor(Long organizationId, Long employeeId, Long responsibleForEmployeeId)
+    {
+        Employee dbEmployee = _employeeRepository.GetEmployeeById(employeeId);
+        Employee dbResponsibleForEmployee = _employeeRepository.GetEmployeeById(responsibleForEmployeeId);
+
+        dbEmployee.RemoveResponsibleFor(dbResponsibleForEmployee);
+
+        _employeeRepository.save(dbEmployee);
+        _employeeRepository.flush();
     }
 
     @Override

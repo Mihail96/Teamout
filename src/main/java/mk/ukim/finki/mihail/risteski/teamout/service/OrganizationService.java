@@ -8,6 +8,8 @@ import mk.ukim.finki.mihail.risteski.teamout.model.request.OrganizationCreateReq
 import mk.ukim.finki.mihail.risteski.teamout.model.request.OrganizationUpdateRequest;
 import mk.ukim.finki.mihail.risteski.teamout.repository.*;
 import mk.ukim.finki.mihail.risteski.teamout.service.contract.IOrganizationService;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
@@ -173,11 +175,36 @@ public class OrganizationService implements IOrganizationService
         address.setCountry(request.getOrganizationCountry());
         _addressRepository.save(address);
 
-        if(!request.getLogoName().equals("") && request.getLogoContent().length != 0)
+        if(request.getLogoName() != null && !request.getLogoName().equals(""))
         {
+            if(image == null)
+            {
+                image = new Image();
+                organization.setLogo(image);
+            }
+
             image.setName(request.getLogoName());
             image.setContent(request.getLogoContent());
             _imageRepository.save(image);
+
+            Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
+
+            if(authentication.isAuthenticated() &&
+                    authentication.getAuthorities().stream().noneMatch(x -> x.getAuthority().equals("ROLE_ANONYMOUS")))
+            {
+                User user = (User)authentication.getPrincipal();
+                Optional<Organization> optionalOrganization = user.getUserInOrganizations()
+                        .stream()
+                        .map(UserInOrganization::getOrganization)
+                        .findFirst();
+                if(optionalOrganization.isEmpty())
+                {
+                    throw new NotFoundException("Could not find organization with id " + organizationId.toString());
+                }
+
+                Organization currentOrganization = optionalOrganization.get();
+                currentOrganization.setLogo(image);
+            }
         }
 
         _organizationRepository.saveAndFlush(organization);

@@ -42,15 +42,10 @@ public class OrganizationController
                                      OrganizationUpdateRequest organizationUpdateRequest,
                                      Model model) throws NotFoundException
     {
-        OrganizationDto organizationDto = _organizationService.UpdateOrganization(organizationId,
-                                                                                  organizationUpdateRequest,
-                                                                                  logoFile);
-
-        model.addAttribute("organizationDto", organizationDto);
-        model.addAttribute("bodyContent", "profile-organization");
-        HandleBaseAttributes(model);
-
-        return "root";
+        _organizationService.UpdateOrganization(organizationId,
+                                                organizationUpdateRequest,
+                                                logoFile);
+        return "redirect:/organization/"+ organizationId.toString() +"/profile";
     }
 
     @PostMapping(value = "/create")

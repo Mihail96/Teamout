@@ -5,7 +5,7 @@
                 <div class="col-7 flex-container flex-container-row">
                     <a class="navbar-main" href="/organization/dashboard">Teamout</a>
                     <ul class="navbar-links">
-                        <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                        <li sec:authorize="hasRole('ROLE_OWNER')">
                             <a class="navbar-link"
                                th:href="${'/organization/'+ currentUser.getOrganizationId().toString() + '/profile/'}">
                                 Organization
@@ -43,16 +43,16 @@
                                 Employees
                             </a>
                         </li>
-                        <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
+                        <li sec:authorize="hasRole('ROLE_OWNER')">
                             <a class="navbar-link"
-                               href="/manufacturers">
-                                Reports
+                               th:href="${'/organization/'+ currentUser.getOrganizationId().toString() + '/admin/list'}">
+                                Admins
                             </a>
                         </li>
                         <li sec:authorize="hasRole('ROLE_OWNER') || hasRole('ROLE_ADMIN')">
                             <a class="navbar-link"
-                               href="/manufacturers">
-                                Statistics
+                               th:href="${'/organization/'+ currentUser.getOrganizationId().toString() + '/report'}">
+                                Reports
                             </a>
                         </li>
                     </ul>

@@ -47,6 +47,11 @@ public class Employee
         ResponsibleFor.add(responsibleFor);
     }
 
+    public void RemoveResponsibleFor(Employee responsibleFor)
+    {
+        ResponsibleFor.remove(responsibleFor);
+    }
+
     public void AddResponsibleTo(Employee responsibleTo)
     {
         ResponsibleFor.add(responsibleTo);

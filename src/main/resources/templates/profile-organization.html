@@ -107,7 +107,28 @@
                         </div>
                     </div>
                 </div>
+                <input th:if="${currentUser.getLogoId() != null}"
+                        onclick="removeImageButton()"
+                        class="btn btn-lg btn-danger"
+                        type="button"
+                        value="Remove image"/>
             </div>
         </div>
     </div>
 </form>
+
+<script th:inline="javascript">
+    let organizationId = /*[[${currentUser.getOrganizationId().toString()}]]*/ 'default';
+    let logoId = /*[[${currentUser.getLogoId() != null ? currentUser.getLogoId().toString() : null}]]*/ 'default';
+
+    function removeImageButton() {
+        let xhttp = new XMLHttpRequest();
+        xhttp.onreadystatechange = function() {
+            if (this.readyState == 4 && this.status == 200) {
+                location.reload();
+            }
+        }
+        xhttp.open("POST", "/organization/" + organizationId + "/image/" + logoId, true);
+        xhttp.send();
+    }
+</script>

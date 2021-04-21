@@ -105,7 +105,7 @@ public class EmployeeController
     }
 
     @PostMapping(value = "/{employeeId}/add-responsible-to")
-    public String GetEmployeeAddResponsibleTo(@PathVariable(value="organizationId") Long organizationId,
+    public String AddEmployeeAddResponsibleTo(@PathVariable(value="organizationId") Long organizationId,
                                               @PathVariable(value="employeeId") Long employeeId,
                                               @RequestParam(value = "EmployeeIds") Long[] employeeIds,
                                               Model model)
@@ -119,7 +119,7 @@ public class EmployeeController
     }
 
     @PostMapping(value = "/{employeeId}/add-responsible-for")
-    public String GetEmployeeAddResponsibleFor(@PathVariable(value="organizationId") Long organizationId,
+    public String AddEmployeeAddResponsibleFor(@PathVariable(value="organizationId") Long organizationId,
                                                @PathVariable(value="employeeId") Long employeeId,
                                                @RequestParam(value = "EmployeeIds") Long[] employeeIds,
                                                Model model)
@@ -128,6 +128,28 @@ public class EmployeeController
 
         model.addAttribute("bodyContent", "details-employee");
         HandleBaseAttributes(model);
+
+        return "redirect:/organization/"+ organizationId.toString() +"/employee/"+ employeeId.toString();
+    }
+
+    @PostMapping(value = "/{employeeId}/responsible-to/{responsibleToEmployeeId}/delete")
+    public String RemoveEmployeeResponsibleTo(@PathVariable(value="organizationId") Long organizationId,
+                                              @PathVariable(value="employeeId") Long employeeId,
+                                              @PathVariable(value="responsibleToEmployeeId") Long responsibleToEmployeeId,
+                                              Model model)
+    {
+        _employeeService.RemoveEmployeeResponsibleTo(organizationId, employeeId, responsibleToEmployeeId);
+
+        return "redirect:/organization/"+ organizationId.toString() +"/employee/"+ employeeId.toString();
+    }
+
+    @PostMapping(value = "/{employeeId}/responsible-for/{responsibleForEmployeeId}/delete")
+    public String RemoveEmployeeResponsibleFor(@PathVariable(value="organizationId") Long organizationId,
+                                               @PathVariable(value="employeeId") Long employeeId,
+                                               @PathVariable(value="responsibleForEmployeeId") Long responsibleForEmployeeId,
+                                               Model model)
+    {
+        _employeeService.RemoveEmployeeResponsibleFor(organizationId, employeeId, responsibleForEmployeeId);
 
         return "redirect:/organization/"+ organizationId.toString() +"/employee/"+ employeeId.toString();
     }
